@@ -100,12 +100,12 @@
 | military | int | 军事（0-100） |
 | commerce | int | 商业（0-100） |
 | eloquence | int | 口才（0-100） |
-| appearance | int | 样貌（0-100） |
+| appearance | int | 样貌（0-100），先天属性，出生时确定，不可成长，仅因特殊事件/疾病/特性可改变 |
 | knowledgePotential | float | 学识潜力（0.5-1.0），隐藏属性，出生时确定终身不变 |
 | militaryPotential | float | 军事潜力（0.5-1.0） |
 | commercePotential | float | 商业潜力（0.5-1.0） |
 | eloquencePotential | float | 口才潜力（0.5-1.0） |
-| appearancePotential | float | 样貌潜力（0.5-1.0） |
+| eloquencePotential | float | 口才潜力（0.5-1.0），隐藏属性，出生时确定终身不变 |
 | traitIds | list[string] | 持有特性ID列表，最多4项 |
 | titleIds | list[string] | 持有头衔ID列表，无上限 |
 | seniority | int | 官场资历（0-100），隐藏属性，在任时按品阶权重增长，离任时每月-1 |
@@ -693,7 +693,7 @@ NPCAiState
 | 家族等级 | 由声望阈值判定 |
 | 资源点上限 | base 3 + floor(声望/1000), max 10 |
 | 建筑产出 | 产出公式（基础+角色能力+等级倍率+资源点+buff） |
-| 角色能力成长 | 基础速率 × 潜力值 × 年龄段 × buff |
+| 角色能力成长 | 基础速率 × 潜力值 × 年龄段 × buff（仅学识/军事/商业/口才，样貌不可成长） |
 | 政绩槽填充速率 | 8.33% × 能力系数 × (1+加成) |
 | 月声望衰减 | 3 + floor(声望/100) × 3 |
 | 月圣眷衰减 | 按品阶衰减系数公式 |
@@ -709,3 +709,4 @@ NPCAiState
 | 复仇路线 | 由结局时的游戏状态推导 |
 | 结局 | 由主线任务完成/失败状态推导 |
 | NPC截留率 | 由personalityTag和当前游戏局势推导 |
+| 角色出生样貌 | 父母所生：clamp((父样貌+母样貌)/2 + rand(-15,15), 0, 100)；随机生成：90%概率rand(50,80)，10%概率在此范围外 |
