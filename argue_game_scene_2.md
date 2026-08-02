@@ -21,6 +21,23 @@
 | `debug mode off` | 关闭全局 debug 模式 |
 | `prestige add xx` | 增加 xx 点声望 |
 | `prestige del xx` | 减少 xx 点声望，最低降至 0 |
+| `event <事件ID> xx` | 设置指定事件下一回合的触发概率为 xx%（0-100），仅生效一次 |
+| `eventid <事件ID> xx` | `event` 的别名，效果相同 |
+| `set <人物ID> death xx` | 设置指定非主角角色下一回合的临时死亡概率为 xx%（0-100），仅生效一次 |
+| `set <人物A> and <人物B> pregnant` | 强制夫妻怀孕，女性进入怀孕状态，双方成为胎儿父母 |
+| `set <人物ID> childbirth` | 让已怀孕女性直接分娩，生成新生儿角色卡 |
+
+### 命令规则
+
+- `debug mode on` 开启后，`event` / `eventid` / `set ... death` 命令才可执行。
+- `set ... pregnant` 与 `set ... childbirth` 同样需要 debug mode。
+- `prestige` 命令可直接执行，不要求 debug 模式。
+- `event` 与 `eventid` 只影响下一回合的事件触发概率，回合结算后自动清除。
+- `set <人物ID> death xx` 只影响下一回合的死亡判定，回合结算后自动清除。
+- 人物 ID 必须存在且角色仍存活；主角不能设置临时死亡概率。
+- `set ... pregnant` 只会在两人互为配偶时生效，且必须是一男一女。
+- `set ... childbirth` 只对已怀孕的女性生效。
+- `xx` 超出 0-100 范围时命令会被拒绝。
 
 ### Debug 模式效果
 
