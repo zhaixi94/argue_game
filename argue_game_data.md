@@ -238,7 +238,7 @@
 | consecutiveCYears | int | 连续丙等年数，用于罢免判定 |
 | defenseResourcePoints | int | 每月防御预设投入的资源点数（0-3） |
 | defenseImperialFavor | int | 每月防御预设投入的圣眷数（0-30），仅中枢 |
-| currentRetentionRate | float? | 当前税收截留率（0-0.5），仅地方有征税权的官职 |
+| currentEmbezzleRate | float? | 当前贪取比例（0-0.1），仅地方有征税权的官职 |
 
 ---
 
@@ -350,6 +350,9 @@
 | name | string | 路名 |
 | capitalStateId | string | 路治所在州的ID |
 | partyBase | enum(None/Ji/Huai) | 党派根基：畿党=京畿路，淮党=江南路，岭南路=None |
+| transportMaintenanceRate | float | 漕运署维护比例（0~0.10），占月度税收总额比例，由转运使设定 |
+| inspectionMaintenanceRate | float | 监察署维护比例（0~0.10），占月度税收总额比例，由提点刑狱设定 |
+| garrisonMaintenanceRate | float | 军屯署维护比例（0~0.10），占月度税收总额比例，由安抚使设定 |
 
 ### State（州）
 
@@ -378,6 +381,9 @@
 | growthBuildingModifier | float | 成长建筑产出修正（0~+0.05），如吴县官学+0.05 |
 | knowledgeGrowthModifier | float | 学识类成长建筑额外修正（0~+0.05），如吴县官学+0.05 |
 | militaryGrowthModifier | float | 军事类成长建筑额外修正（0~+0.05），如番禺县武馆+0.05 |
+| marketMaintenanceRate | float | 市集维护比例（0~0.10），占月度税收比例，由主簿设定 |
+| aqueductMaintenanceRate | float | 引水渠维护比例（0~0.10），占月度税收比例，由知县事设定 |
+| roadMaintenanceRate | float | 乡道维护比例（0~0.10），占月度税收比例，由县尉设定 |
 
 ---
 
@@ -507,20 +513,22 @@
 
 ---
 
-## 二十三、季度税收记录 (QuarterlyTaxRecord)
+## 二十三、月度税收记录 (MonthlyTaxRecord)
 
-每个有税收的地点每季度一条记录。
+每个有税收的地点每月一条记录。
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | locationId | string | 州或县的ID |
 | year | int | 游戏年 |
-| quarter | int | 季度（1-4） |
-| totalCollected | int | 该季总税收（贯） |
-| retainedAmount | int | 被地方官截留的金额 |
-| remittedToTreasury | int | 上缴国库的金额 |
-| jiRemitted | int | 畿党成员家族上缴累计 |
-| huaiRemitted | int | 淮党成员家族上缴累计 |
+| month | int | 月份（1-12） |
+| totalCollected | int | 该月总税收（贯） |
+| taxPoolBalance | int | 税赋库当前余额 |
+| treasuryBalance | int | 金库当前余额 |
+| embezzledAmount | int | 被官员贪取的金额 |
+| maintenanceSpending | int | 县维护建筑支出（市集+引水渠+乡道，仅县级有值） |
+| donationTotalThisMonth | int | 本月该地金库收到的捐献金额 |
+| remittedUpward | int | 向上级缴纳的金额（县→州/州→路） |
 
 ---
 
@@ -530,13 +538,40 @@
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| balance | int | 国库当前余额（贯） |
-| lastQuarterIncome | int | 上季度总税收上缴额 |
-| lastQuarterExpenditure | int | 上季度总支出（城市建筑升级、国家事件等） |
-| jiTotalRemittedThisQuarter | int | 本季度畿党成员家族上缴累计 |
-| huaiTotalRemittedThisQuarter | int | 本季度淮党成员家族上缴累计 |
+| balance | int | 国库当前余额（贯），初始60000 |
+| lastYearIncome | int | 上年总收入（路每年缴入的80%税赋） |
+| lastYearExpenditure | int | 上年总支出（俸禄18000 + 事件支出） |
+| lastYearSurplus | int | 上年盈亏（收入-支出），正为盈余，负为亏空 |
+| consecutiveSurplusYears | int | 连续盈余年数 |
+| consecutiveDeficitYears | int | 连续亏空年数 |
+| emperorBuff | enum(None/Anger/Joy) | 当前皇帝态度buff |
+| emperorBuffRemainingMonths | int | 皇帝态度buff剩余月数 |
+| jiTotalRemittedThisYear | int | 本年畿党成员家族上缴累计 |
+| huaiTotalRemittedThisYear | int | 本年淮党成员家族上缴累计 |
+| balanceHistory | list[int] | 历年国库余额记录（用于折线图） |
+| donationTotalThisYear | int | 本年所有家族捐献给国库的累计金额 |
 
-> 每季度结算时更新：收入来自各州县税收上缴，支出用于城市建筑升级和国家事件；两党上缴差额×0.3转化为胜出方中枢官员家族圣眷奖励。
+> 每年结算时更新：收入来自各路每年缴入的80%税赋，固定支出18000贯俸禄+事件支出；震怒/愉悦buff判定见主文档国库系统。
+
+---
+
+## 二十四点五、捐献记录 (DonationRecord) — 运行时数据
+
+每次捐献产生一条记录。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| donationId | string | 捐献唯一ID |
+| turnNumber | int | 回合数 |
+| familyId | string | 捐赠家族ID |
+| donorCharacterId | string | 捐赠官员角色ID（国库捐献时为空） |
+| targetLevel | enum(County/State/Route/National) | 捐献对象级别 |
+| targetId | string | 捐献目标ID（县/州/路ID，国库为"national"） |
+| amount | int | 捐献金额（贯） |
+| meritGain | float | 获得的政绩槽百分比（国库捐献时为0） |
+| imperialFavorGain | int | 获得的圣眷点数（仅国库捐献有值） |
+
+> 每回合每官员/每家族在每级别最多1条记录；捐献详情见建筑系统文档4.8节捐献机制。
 
 ---
 
@@ -576,7 +611,7 @@
 | ActiveBuff | 是 | 所有活跃buff |
 | KejuState | 是 | 科举状态 |
 | AnnualReviewRecord | 是 | 述职记录 |
-| QuarterlyTaxRecord | 是 | 税收记录 |
+| MonthlyTaxRecord | 是 | 税收记录 |
 | NationalTreasury | 是 | 国库数据 |
 | NPCAiState | 是 | NPC AI状态 |
 | SaveMetadata | 是 | 存档元数据 |
@@ -708,5 +743,5 @@ NPCAiState
 | 死亡概率 | 年龄段公式（50岁以下0%, 以上((age-50)/50)²） |
 | 复仇路线 | 由结局时的游戏状态推导 |
 | 结局 | 由主线任务完成/失败状态推导 |
-| NPC截留率 | 由personalityTag和当前游戏局势推导 |
+| NPC贪取率 | 由personalityTag和当前游戏局势推导 |
 | 角色出生样貌 | 父母所生：clamp((父样貌+母样貌)/2 + rand(-15,15), 0, 100)；随机生成：90%概率rand(50,80)，10%概率在此范围外 |
