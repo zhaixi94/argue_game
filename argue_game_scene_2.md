@@ -26,11 +26,13 @@
 | `set <人物ID> death xx` | 设置指定非主角角色下一回合的临时死亡概率为 xx%（0-100），仅生效一次 |
 | `set <人物A> and <人物B> pregnant` | 强制夫妻怀孕，女性进入怀孕状态，双方成为胎儿父母 |
 | `set <人物ID> childbirth` | 让已怀孕女性直接分娩，生成新生儿角色卡 |
+| `set <人物ID> <五维> xx` | 将指定角色的五维数值设为 xx（0-100） |
 
 ### 命令规则
 
 - `debug mode on` 开启后，`event` / `eventid` / `set ... death` 命令才可执行。
 - `set ... pregnant` 与 `set ... childbirth` 同样需要 debug mode。
+- `set <人物ID> <五维> xx` 需要 debug mode；`五维`支持中文或英文名称：学识/knowledge、军事/military、商业/commerce、口才/eloquence、样貌/appearance。
 - `prestige` 命令可直接执行，不要求 debug 模式。
 - `event` 与 `eventid` 只影响下一回合的事件触发概率，回合结算后自动清除。
 - `set <人物ID> death xx` 只影响下一回合的死亡判定，回合结算后自动清除。
