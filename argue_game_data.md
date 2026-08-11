@@ -6,8 +6,8 @@
 
 | 分类 | 说明 | 示例 |
 |------|------|------|
-| **静态数据** | 游戏启动时加载，运行时只读 | Trait、Title、OfficialRank、OfficialPositionBuff、OfficialPositionTemplate、BuildingTemplate、Route、State、County |
-| **运行时数据** | 存档时持久化，每回合可能变更 | GameState、Family、FamilyRelationship、Character、OfficialPositionInstance、BuildingInstance、IntelligenceCard、Party、EventChainState、Mission、StoryState、ActiveBuff、KejuState、AnnualReviewRecord、QuarterlyTaxRecord、NationalTreasury、NPCAiState |
+| **静态数据** | 游戏启动时加载，运行时只读 | Trait、Title、OfficialRank、OfficialPositionBuff、OfficialPositionTemplate、BuildingTemplate、TechNodeTemplate、Route、State、County |
+| **运行时数据** | 存档时持久化，每回合可能变更 | GameState、Family、FamilyRelationship、Character、OfficialPositionInstance、BuildingInstance、IntelligenceCard、Party、EventChainState、Mission、StoryState、ActiveBuff、KejuState、AnnualReviewRecord、QuarterlyTaxRecord、NationalTreasury、NPCAiState、TechTreeState |
 | **存档元数据** | 存档列表展示用 | SaveMetadata |
 
 ---
@@ -591,6 +591,72 @@
 
 ---
 
+## 二十五点五、科技节点模板 (TechNodeTemplate) — 静态数据
+
+每条路线的每个科技节点一条记录，共50条（家族17+为官15+党派18），游戏启动时加载。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | string | 唯一ID（如"family_1_diligent"、"official_3_keji"、"party_9_bubu"） |
+| name | string | 显示名（如勤俭持家、克己奉公、步步紧逼） |
+| route | enum(Family/Official/Party) | 所属路线：家族/为官/党派 |
+| segment | int | 所在段序号（1/2/3），段由门控节点分隔 |
+| orderInSegment | int | 段内序号（1起），决定从下往上的显示位置和连线关系 |
+| turnCost | int | 研究所需回合数 |
+| nodeType | enum(Normal/Choice/Gate) | 节点类型：普通/二选一/门控 |
+| effectDescription | string? | 普通节点的效果描述文本，门控节点为null |
+| effectKey | string? | 普通节点的效果键名（如"money_output"、"reputation_decay"、"stability_defense"），门控节点为null |
+| effectValue | float? | 普通节点的效果值（如0.05=+5%），门控节点为null |
+| choiceA | TechNodeChoice? | 二选一节点A选项，普通节点和门控节点为null |
+| choiceB | TechNodeChoice? | 二选一节点B选项，普通节点和门控节点为null |
+| gateCondition | string? | 门控节点的解锁条件描述（如"成为家主"、"声望≥3000"），非门控为null |
+| gateConditionKey | string? | 门控节点的条件键名（如"is_patriarch"、"family_reputation_gte_3000"、"family_reputation_gte_7000"、"has_official_position"、"is_state_level_official"、"has_entered_central"、"has_joined_party"、"party_contribution_gte_150"、"is_party_leader"），非门控为null |
+| prerequisiteNodeIds | list[string] | 前置节点ID列表，OR关系（完成任一即可研究），空列表表示无前置（段首节点） |
+| prerequisiteType | enum(Any/All) | 前置类型：Any=完成任一即可，All=需全部完成；当前所有节点均为Any |
+
+**嵌套 TechNodeChoice：**
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| name | string | 选项显示名（如"学识成长+5%"） |
+| description | string | 选项描述文本 |
+| effectKey | string | 效果键名 |
+| effectValue | float | 效果值（如0.05=+5%） |
+
+---
+
+## 二十五点六、科技树状态 (TechTreeState) — 运行时数据
+
+每个家族一条记录，记录该家族在各路线上的研究进度。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| familyId | string | 家族ID，主键 |
+| routes | list[TechRouteState] | 三条路线的状态列表（固定3项） |
+
+**嵌套 TechRouteState：**
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| route | enum(Family/Official/Party) | 路线类型 |
+| unlockedNodeIds | set[string] | 已解锁的节点ID集合（含已通过的门控节点） |
+| researchProgress | TechResearchProgress? | 当前正在研究的节点进度，null表示无进行中研究 |
+| choiceRecords | map[string->string] | 二选一记录，key=节点ID，value=选中的选项标识（"A"或"B"），永久记录不可更改 |
+
+**嵌套 TechResearchProgress：**
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| nodeId | string | 正在研究的节点ID |
+| turnsSpent | int | 已消耗回合数 |
+| turnsRemaining | int | 剩余回合数，每回合-1，归零时完成解锁 |
+
+> 门控节点无需研究进度，达到条件时自动加入unlockedNodeIds。
+> 三条路线可各并行研究1个节点（同时最多3个TechResearchProgress）。
+> 选中二选一后，未选选项对应的分支不点亮，但同一节点仍标记为已解锁。
+
+---
+
 ## 二十六、存档数据范围
 
 **存档内容 = 全部运行时数据 + 存档元数据**
@@ -614,12 +680,14 @@
 | MonthlyTaxRecord | 是 | 税收记录 |
 | NationalTreasury | 是 | 国库数据 |
 | NPCAiState | 是 | NPC AI状态 |
+| TechTreeState | 是 | 科技树状态 |
 | SaveMetadata | 是 | 存档元数据 |
 | Trait（静态数据） | 否 | 启动时从配置加载 |
 | Title（静态数据） | 否 | 启动时从配置加载 |
 | OfficialRank（静态数据） | 否 | 启动时从配置加载 |
 | OfficialPositionTemplate（静态数据） | 否 | 启动时从配置加载 |
 | BuildingTemplate（静态数据） | 否 | 启动时从配置加载 |
+| TechNodeTemplate（静态数据） | 否 | 启动时从配置加载 |
 | OfficialPositionBuff（静态数据） | 否 | 启动时从配置加载 |
 | Route/State/County（静态+运行时混合） | 是 | 繁荣度为运行时数据需存档 |
 
@@ -715,6 +783,14 @@ QuarterlyTaxRecord
 
 NPCAiState
   └→ familyId ──→ Family
+
+TechTreeState
+  └→ familyId ──→ Family
+  └→ routes[].researchProgress.nodeId ──→ TechNodeTemplate
+  └→ routes[].choiceRecords.key ──→ TechNodeTemplate
+
+TechNodeTemplate
+  └→ prerequisiteNodeIds[] ──→ TechNodeTemplate（自引用）
 ```
 
 ---
@@ -744,4 +820,6 @@ NPCAiState
 | 复仇路线 | 由结局时的游戏状态推导 |
 | 结局 | 由主线任务完成/失败状态推导 |
 | NPC贪取率 | 由personalityTag和当前游戏局势推导 |
+| 科技节点可研究状态 | 由unlockedNodeIds + prerequisiteNodeIds + 门控条件推导 |
+| 科技节点显示状态 | 已解锁/研究中/可研究/未满足，由TechTreeState + TechNodeTemplate推导 |
 | 角色出生样貌 | 父母所生：clamp((父样貌+母样貌)/2 + rand(-15,15), 0, 100)；随机生成：90%概率rand(50,80)，10%概率在此范围外 |
