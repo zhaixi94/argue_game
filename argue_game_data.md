@@ -387,6 +387,60 @@
 
 ---
 
+## 十六点五、事件模板数据 (EventTemplate) — 静态数据
+
+事件模板统一存放于 `data/events/event_templates.json`，常规事件与系统事件共用同一模板结构，按 `category` 区分。事件触发的条件、内容、选项效果全部由模板数据配置。
+
+**事件模板字段：**
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | string | 事件唯一ID |
+| title | string | 事件标题 |
+| rarity | enum(普通/稀有/史诗) | 稀有度，影响常规事件的触发概率与增减益幅度 |
+| stage | enum(Common/Local/Central/…) | 可用阶段（Common=全阶段） |
+| type | enum(Settlement/Buff/Chain/…) | 结算/Buff/事件链等类型 |
+| category | enum(Regular/System) | **Regular=常规事件**（每回合最多1个，按 triggerChance 概率抽取）；**System=系统事件**（不占槽位、可多个并存，仅按 conditions 触发，忽略 triggerChance） |
+| triggerChance | float(0~1) | 常规事件每回合触发概率；系统事件忽略此字段 |
+| imageTone | string | 事件配图基调 |
+| description | string | 事件描述 |
+| conditions | list[Condition] | 触发条件（数据判定），系统事件为纯条件触发 |
+| options | list[Option] | 玩家选项，每项含 label/preview/resultText/effects |
+
+**Condition（触发条件）原语：**
+
+| type | 说明 |
+|------|------|
+| Always | 恒真 |
+| ReputationAtLeast / MoneyBelow | 家族声望/金钱条件 |
+| PlayerFamilyMemberCountAtLeast | 家族成员数 ≥ amount |
+| PlayerFamilyMemberRatioAtMost / PlayerFamilyMemberRatioAbove | 家族活人占人数上限比例 ≤ / > number（系统事件常用） |
+| SystemEventCooldownReady | 该系统事件家族级冷却已结束（key=事件模板ID） |
+| StateProsperityAtLeast / StateProsperityBelow / SeasonEquals | 州城繁荣度/季节条件 |
+| ProtagonistAbilityAtLeast / ProtagonistAbilityBelow / ProtagonistKnowledgeAtLeast | 主角能力条件 |
+| PlayerMemberInGrowthBuilding / PlayerMemberInKnowledgeBuilding / PlayerMemberInMoneyBuilding 等 | 家族成员入驻建筑条件 |
+
+**Option 效果（effects）原语：**
+
+| type | 说明 |
+|------|------|
+| Money / Reputation / ImperialFavor / Vigilance / ResourcePoints / CityProsperity / CharacterAbility / Buff / Note | 通用增减益效果（所有事件可用） |
+| AddRandomFamilyMember | 按参数生成一名随机成员加入玩家家族（系统事件常用）。参数：ageMin/ageMax（年龄区间）、abilityFloor（保证能力下限）、excludeKnowledge（true=从除学识外的能力抽取）、potentialMin/potentialMax（潜力区间）、appearanceMin/appearanceMax（样貌区间）、genderChance（男性概率） |
+| SetSystemEventCooldown | 设置该系统事件的家族级冷却月数（key=事件模板ID），参数 cooldownMonths |
+
+**系统事件家族级冷却：**
+
+- 每个家族维护一张系统事件冷却表（key=事件模板ID，value=剩余冷却月数），随存档持久化
+- 每回合结算时统一递减；冷却结束后该事件可再次触发
+- 系统事件不套用常规事件的12个月全局冷却，频率完全由冷却与触发条件控制
+
+**新增系统事件：**
+
+- 在 `event_templates.json` 添加一条 `"category": "System"` 的事件模板，用现有 Condition/Effect 原语配置即可，无需改代码
+- 如需新的条件/效果原语，扩展原语库后即可被任意事件模板复用
+
+---
+
 ## 十七、事件链状态 (EventChainState)
 
 | 字段 | 类型 | 说明 |
@@ -652,7 +706,7 @@
 | turnsRemaining | int | 剩余回合数，每回合-1，归零时完成解锁 |
 
 > 门控节点无需研究进度，达到条件时自动加入unlockedNodeIds。
-> 三条路线可各并行研究1个节点（同时最多3个TechResearchProgress）。
+> 全局同时只能研究1个节点（同时最多1个TechResearchProgress），完成后才能开始下一个。
 > 选中二选一后，未选选项对应的分支不点亮，但同一节点仍标记为已解锁。
 
 ---
