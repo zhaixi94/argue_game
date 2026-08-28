@@ -304,9 +304,13 @@
 | id | string | 唯一ID |
 | type | enum(Accusation/Impeachment/Alienation/TaxEvasion) | 类型：检举/弹劾/离间/截留 |
 | level | int | 等级（1=初级/2=中级/3=高级） |
+| targetFamilyId | string | 针对对象家族ID |
+| isConfirmed | bool | 是否已鉴定（true=明确情报，false=疑似情报） |
 | description | string | 描述文本（如"XXX在Y地贪赃枉法的证据"），用于UI展示 |
 | ownerFamilyId | string? | 持有该情报卡的家族ID，null表示仍在党派情报池中 |
 | isInPartyPool | bool | 是否仍在党派情报池中（未被领取） |
+
+> 疑似情报（isConfirmed=false）的type和level后台已生成但前台不显示，仅显示targetFamilyId。鉴定后isConfirmed变为true，前台揭示类型和等级。
 
 ---
 
