@@ -68,7 +68,7 @@
 | familyAId | string | 家族A的ID（字典序较小者） |
 | familyBId | string | 家族B的ID（字典序较大者） |
 | baseRelationship | int | 基础家族关系值（≥0），由联姻建立，每月可能衰减 |
-| marriageCooldownEndTurn | int | 联姻失败后的冷却结束回合，0表示无冷却 |
+| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（人员类/权限类/关系类/情报类/资源类），0表示无冷却 |
 
 > 实际家族间关系 = min(100, baseRelationship + 双方成员关系加权平均值)
 >
@@ -640,10 +640,9 @@
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | familyId | string | 家族ID，主键 |
-| lastMarriageYear | int | 上次发起联姻的游戏年，用于限制联姻频率 |
-| lastNegotiationYear | int | 上次发起商议的游戏年 |
-| marriageProposalsThisYear | int | 本年已发起联姻次数 |
-| negotiationAttemptsThisYear | int | 本年已发起商议次数 |
+| lastTradeYear | int | 上次发起交易的游戏年 |
+| tradeAttemptsThisYear | int | 本年已发起交易次数 |
+| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（人员类/权限类/关系类/情报类/资源类） |
 
 > NPC的截留率、入党倾向等由personalityTag和当前游戏状态推导，不单独存储。
 
@@ -651,7 +650,7 @@
 
 ## 二十五点五、科技节点模板 (TechNodeTemplate) — 静态数据
 
-每条路线的每个科技节点一条记录，共50条（家族17+为官15+党派18），游戏启动时加载。
+每条路线的每个科技节点一条记录，共53条（家族19+为官16+党派18），游戏启动时加载。
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
