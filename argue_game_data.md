@@ -33,7 +33,7 @@
 
 ## 三、家族 (Family)
 
-每个家族一条记录，共12条（1主控+11NPC）。
+每个家族一条记录，共14条（1主控+13NPC）。
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
@@ -54,6 +54,9 @@
 | hasEnteredCentral | bool | 家族是否有成员担任过正三品以上官职，为true时解锁圣眷和戒心 |
 | activeBuffs | list[ActiveBuff] | 当前作用于该家族的buff列表 |
 | isDefunct | bool | 是否已灭门（如沈家） |
+| vagrantDrawCooldownEndTurn | int | 招丁纳口冷却截止回合，0表示可立即免费抽卡 |
+| vagrantPaidDrawCount | int | 当前周期付费抽卡次数，免费抽卡时重置为0 |
+| vagrantDrawnCharacterIds | list[string] | 当前留存中的人物卡ID列表（抽卡抽出但尚未招募的） |
 
 > 家族等级（初级/中级/顶级）由声望阈值推导，不单独存储。
 
@@ -126,9 +129,28 @@
 | currentPositionId | string? | 当前实职ID，对应OfficialPositionInstance；null则为散官（有品阶无实职） |
 | isOnMaternityLeave | bool | 女性官员是否在产假中 |
 | maternityLeaveEndTurn | int | 产假结束回合，0表示不在产假 |
-| isInVagrantPool | bool | 是否在流浪池中（被驱逐后） |
-| vagrantPoolEndTurn | int | 流浪池死亡截止回合，超过此回合未被收留则死亡 |
+| isInVagrantPool | bool | 是否在流浪池中（被驱逐或随机生成的散人） |
+| vagrantPoolQuality | enum? (Normal/Usable/Talented) | 随机散人质量档位：普通/可用/天资；被驱逐族人为null |
+| vagrantDrawExpireTurn | int? | 抽卡留存截止回合，超过此回合未招募则回到流浪池；不在留存状态时为null |
 | activeBuffs | list[ActiveBuff] | 当前作用于该角色的buff列表 |
+
+---
+
+## 五点五、流浪池 (VagrantPool) — 全局单例
+
+全局唯一记录，管理流浪池的随机散人和被驱逐族人。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| randomCharacterIds | list[string] | 随机散人角色ID列表，固定100人 |
+| expelledCharacterIds | list[string] | 被驱逐族人角色ID列表，动态增减 |
+| lastRefreshTurn | int | 上次年度刷新回合 |
+
+> - 随机散人每年全部清除并重新生成100人（普通60:可用30:天资10）
+> - 被驱逐族人每年年龄+1，过年时每人10%概率消失
+> - 流浪池内容对所有人（玩家/AI）完全不可见，仅通过"招丁纳口"按钮抽卡
+> - 抽卡抽出的卡留存3个月，未招募的回到流浪池
+> - 详见 [argue_game_family_system.md](argue_game_family_system.md) 流浪池制度章节
 
 ---
 
