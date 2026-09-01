@@ -1,0 +1,198 @@
+{
+  "description": "剧情JSON脚本指令参考手册。所有story/*.json文件中的script数组指令均遵循此规范。",
+
+  "instructions": {
+    "narration": {
+      "desc": "旁白叙述，不带说话人，用于描写环境、事件、氛围",
+      "fields": {
+        "type": "narration",
+        "text": "旁白文字内容"
+      },
+      "example": { "type": "narration", "text": "窗外传来母亲的脚步声。" }
+    },
+
+    "dialog": {
+      "desc": "角色对话。可附带effect字段控制立绘变化",
+      "fields": {
+        "type": "dialog",
+        "speaker": "说话人姓名",
+        "text": "对话内容",
+        "effect": "(可选) 立绘特效，结构见effect指令"
+      },
+      "example": { "type": "dialog", "speaker": "柳蕙心", "text": "醒了？", "effect": { "show": { "pos": "right", "expr": "gentle" } } }
+    },
+
+    "thought": {
+      "desc": "主角内心独白，无说话人",
+      "fields": {
+        "type": "thought",
+        "text": "内心想法内容"
+      },
+      "example": { "type": "thought", "text": "又是背书……昨天那段还没背利索呢。" }
+    },
+
+    "action": {
+      "desc": "动作描写，用于角色肢体动作、表情变化以外的行为描写",
+      "fields": {
+        "type": "action",
+        "text": "动作描写内容"
+      },
+      "example": { "type": "action", "text": "阿福一把抢过书袋，跑在前面。" }
+    },
+
+    "branch": {
+      "desc": "条件分支，当前仅用于主角性别差异内容。引擎根据玩家选择的角色性别读取对应子数组",
+      "fields": {
+        "type": "branch",
+        "condition": "分支条件名，目前固定为 protagonist_gender",
+        "male": "男性主角时执行的指令数组",
+        "female": "女性主角时执行的指令数组"
+      },
+      "example": {
+        "type": "branch",
+        "condition": "protagonist_gender",
+        "male": [
+          { "type": "dialog", "speaker": "阿福", "text": "少爷，水来了！" }
+        ],
+        "female": [
+          { "type": "dialog", "speaker": "阿雁", "text": "小姐，水来了！" }
+        ]
+      }
+    },
+
+    "effect": {
+      "desc": "立绘特效指令，控制角色立绘的显示、隐藏、移动、表情切换",
+      "fields": {
+        "type": "effect",
+        "action": "特效动作类型，见effect_actions",
+        "target": "目标角色姓名",
+        "pos": "(show/move时必填) 立绘位置",
+        "expr": "(show/expr_change时必填) 表情标识"
+      },
+      "example": { "type": "effect", "action": "show", "target": "沈伯远", "pos": "center", "expr": "stern" }
+    },
+
+    "bg_change": {
+      "desc": "切换场景背景图",
+      "fields": {
+        "type": "bg_change",
+        "background": "背景图资源ID",
+        "transition": "过渡方式：fade(渐变) | cut(硬切)"
+      },
+      "example": { "type": "bg_change", "background": "bg_shenjia_courtyard_morning", "transition": "fade" }
+    },
+
+    "bgm": {
+      "desc": "背景音乐控制",
+      "fields": {
+        "type": "bgm",
+        "track": "音乐资源ID",
+        "action": "play(播放) | stop(停止) | fade(渐变切换)",
+        "fade": "(可选) 渐变时长(秒)"
+      },
+      "example": { "type": "bgm", "track": "bgm_shenjia_morning", "action": "play", "fade": 2 }
+    },
+
+    "tutorial": {
+      "desc": "游戏系统教学提示，在画面上弹出引导框。若教学涉及玩家操作，后续应紧跟pause指令等待操作完成",
+      "fields": {
+        "type": "tutorial",
+        "system": "所属游戏系统名称",
+        "text": "教学说明文字"
+      },
+      "example": { "type": "tutorial", "system": "回合推进", "text": "点击你的角色卡，放入私塾的槽位中。" }
+    },
+
+    "pause": {
+      "desc": "暂停剧情，等待玩家完成指定操作后继续。引擎根据reason识别等待的操作类型，操作完成后自动恢复script执行",
+      "fields": {
+        "type": "pause",
+        "reason": "等待原因/操作类型：place_character(放置角色卡)、confirm(确认)、choice(选择)等",
+        "detail": "操作细节描述，如「角色→建筑」"
+      },
+      "example": { "type": "pause", "reason": "place_character", "detail": "主角→私塾" }
+    },
+
+    "wait": {
+      "desc": "等待/停顿，控制剧情节奏。用于情感留白、强调前文。与pause不同：wait是固定时长的自动停顿，pause是等待玩家操作的无限期暂停",
+      "fields": {
+        "type": "wait",
+        "seconds": "停顿时长(秒)，支持小数"
+      },
+      "example": { "type": "wait", "seconds": 0.5 }
+    }
+  },
+
+  "effect_actions": {
+    "show": {
+      "desc": "显示角色立绘",
+      "required_fields": ["target", "pos", "expr"],
+      "detail": "在指定位置以指定表情显示角色。同一角色重复show时，替换当前立绘"
+    },
+    "hide": {
+      "desc": "隐藏角色立绘",
+      "required_fields": ["target"],
+      "detail": "将指定角色立绘从画面移除，通常用于角色离场"
+    },
+    "move": {
+      "desc": "移动立绘位置",
+      "required_fields": ["target", "pos"],
+      "detail": "将已显示的立绘平滑移动到新位置，不改变表情"
+    },
+    "expr_change": {
+      "desc": "切换立绘表情",
+      "required_fields": ["target", "expr"],
+      "detail": "保持立绘位置不变，仅更换表情差分图"
+    }
+  },
+
+  "positions": {
+    "left": "画面左侧，通常用于配角/侍从",
+    "center": "画面中央，通常用于当前对话主角或重要角色",
+    "right": "画面右侧，通常用于与左侧角色对话的对象"
+  },
+
+  "expressions": {
+    "_note": "表情标识与角色立绘差分图对应，每个角色不一定拥有全部表情",
+    "gentle": "温柔/柔和，用于母亲日常说话、关怀时",
+    "cheerful": "开朗/活泼，用于阿福阿雁等年轻角色的日常状态",
+    "neutral": "中性/平静，默认表情，无强烈情绪",
+    "stern": "严厉/肃穆，用于父亲教经、训话时",
+    "solemn": "庄重/凝重，用于角色陷入深思或说出郑重之语时",
+    "amused": "觉得有趣/忍俊不禁，用于轻松互动时",
+    "sheepish": "窘迫/不好意思，用于被戳穿或尴尬时",
+    "sad": "忧伤/低落",
+    "angry": "愤怒/生气",
+    "worried": "担忧/忧虑",
+    "surprised": "惊讶/意外",
+    "determined": "坚定/决然"
+  },
+
+  "dialog_inline_effect": {
+    "desc": "dialog指令可通过effect字段在对话同时触发立绘变化，避免单独写effect指令",
+    "structure": {
+      "show": { "pos": "立绘位置", "expr": "表情" },
+      "hide": {},
+      "move": { "pos": "新位置" },
+      "expr_change": { "expr": "新表情" }
+    },
+    "example": {
+      "type": "dialog",
+      "speaker": "柳蕙心",
+      "text": "又来了，孩子多大就讲这些。",
+      "effect": { "show": { "pos": "right", "expr": "amused" } }
+    }
+  },
+
+  "background_ids": {
+    "_note": "背景图资源ID命名规范：bg_地点_时段",
+    "bg_shenjia_bedroom_morning": "沈家·主角卧房·清晨",
+    "bg_shenjia_courtyard_morning": "沈家·庭院·清晨",
+    "bg_shenjia_schoolroom": "沈家·私塾"
+  },
+
+  "bgm_ids": {
+    "_note": "背景音乐资源ID命名规范：bgm_场景_情绪",
+    "bgm_shenjia_morning": "沈家晨间，温暖日常氛围"
+  }
+}
