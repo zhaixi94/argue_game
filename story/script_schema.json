@@ -35,9 +35,21 @@
       "desc": "动作描写，用于角色肢体动作、表情变化以外的行为描写",
       "fields": {
         "type": "action",
-        "text": "动作描写内容"
+        "actor": "动作执行者姓名（必填）。主角动作为\"主角\"；多人协作动作为\"多人\"；无特定角色的环境动作可省略",
+        "text": "动作描写内容",
+        "effect": "(可选) 动作附带的画面效果，见action_effects"
       },
-      "example": { "type": "action", "text": "阿福一把抢过书袋，跑在前面。" }
+      "example": { "type": "action", "actor": "阿福", "text": "阿福一把抢过书袋，跑在前面。" }
+    },
+
+    "action_effects": {
+      "_note": "action指令effect字段可选值，引擎据此播放对应画面效果",
+      "screen_shake": "画面摇晃，用于撞击、重击、拍桌等力度动作",
+      "flash": "画面闪白，用于突发的强光、惊吓瞬间",
+      "fade_to_black": "渐黑，用于昏厥、失去意识等",
+      "zoom_in": "画面拉近，用于强调某处细节",
+      "zoom_out": "画面拉远，用于展现全局",
+      "vignette": "暗角加深，用于压抑、不安的氛围"
     },
 
     "branch": {
