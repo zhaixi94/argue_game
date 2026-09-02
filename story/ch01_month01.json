@@ -2,6 +2,7 @@
   "chapter": "第1期·新手教学",
   "month": 1,
   "title": "初醒·父训",
+  "quest": "quest_m01",
   "scenes": [
     {
       "id": "m01_wake",
@@ -15,10 +16,10 @@
 
         { "type": "narration", "text": "脚步声到了门前。门被轻轻推开一道缝。" },
         { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-        { "type": "action", "text": "母亲半个身子探进来，围裙上的面粉还没拍干净，簪子歪了一点也没顾上扶。她先把窗根底下的炭盆往门边挪了挪，又拿手背试了试烟熏不熏人。" },
+        { "type": "action", "actor": "柳蕙心", "text": "母亲半个身子探进来，围裙上的面粉还没拍干净，簪子歪了一点也没顾上扶。她先把窗根底下的炭盆往门边挪了挪，又拿手背试了试烟熏不熏人。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "醒了？你父亲今日要考你背书，快起来，别让他等。" },
         { "type": "thought", "text": "又是背书……昨天那段还没背利索呢。" },
-        { "type": "action", "text": "母亲没等你应声就走了，灶上粥还看着火。脚步声远了。" },
+        { "type": "action", "actor": "柳蕙心", "text": "母亲没等你应声就走了，灶上粥还看着火。脚步声远了。" },
         { "type": "effect", "action": "hide", "target": "柳蕙心" },
 
         { "type": "narration", "text": "你正磨蹭着，另一阵脚步已经冲到了门口——这回可没敲门。" },
@@ -27,47 +28,52 @@
           "condition": "protagonist_gender",
           "male": [
             { "type": "effect", "action": "show", "target": "阿福", "pos": "left", "expr": "neutral" },
-            { "type": "narration", "text": "阿福端着铜盆溜进来，脚步放得很轻。他先往门外瞄了一眼，确认母亲走远了，才把步子放开。" },
+            { "type": "action", "actor": "阿福", "text": "阿福端着铜盆溜进来，脚步放得很轻。" },
+            { "type": "action", "actor": "阿福", "text": "他先往门外瞄了一眼，确认母亲走远了，才把步子放开。" },
             { "type": "dialog", "speaker": "阿福", "text": "少爷，水来了。" },
-            { "type": "action", "text": "铜盆搁到架上，他四下又看了一眼，才从怀里掏出一块油纸包——" },
+            { "type": "action", "actor": "阿福", "text": "铜盆搁到架上，他四下又看了一眼，才从怀里掏出一块油纸包——" },
             { "type": "dialog", "speaker": "阿福", "text": "厨房刚出的，还热。" },
             { "type": "narration", "text": "油纸包被体温捂得温热。拆开一角——桂花糕，你最爱那种。" },
             { "type": "dialog", "speaker": "阿福", "text": "快吃，别让夫人看见。" },
-            { "type": "narration", "text": "油纸一拆，甜味散出来。还冒着热气——他从灶上端水那会儿就揣上了，揣了一路。" },
-            { "type": "action", "text": "你两口就把糕点塞进嘴里，腮帮子鼓着，噎得直翻白眼。" },
+            { "type": "narration", "text": "油纸一拆，甜味散出来。还冒着热气。" },
+            { "type": "dialog", "speaker": "阿福", "text": "灶上端水那会儿就揣上了，揣了一路呢。" },
+            { "type": "action", "actor": "主角", "text": "你两口就把糕点塞进嘴里，腮帮子鼓着，噎得直翻白眼。" },
             { "type": "dialog", "speaker": "阿福", "text": "少爷你嘴角也有渣。" },
-            { "type": "action", "text": "他指了指你的嘴角，又赶紧把手缩回去，怕你抹给他。" }
+            { "type": "action", "actor": "阿福", "text": "他指了指你的嘴角，又赶紧把手缩回去，怕你抹给他。" }
           ],
           "female": [
             { "type": "effect", "action": "show", "target": "阿雁", "pos": "left", "expr": "neutral" },
-            { "type": "narration", "text": "阿雁端着铜盆溜进来，脚步放得很轻。她先往门外瞄了一眼，确认母亲走远了，才把步子放开。" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁端着铜盆溜进来，脚步放得很轻。" },
+            { "type": "action", "actor": "阿雁", "text": "她先往门外瞄了一眼，确认母亲走远了，才把步子放开。" },
             { "type": "dialog", "speaker": "阿雁", "text": "小姐，水来了。" },
-            { "type": "action", "text": "铜盆搁到架上，她又从怀里掏出一块油纸包——" },
+            { "type": "action", "actor": "阿雁", "text": "铜盆搁到架上，她又从怀里掏出一块油纸包——" },
             { "type": "dialog", "speaker": "阿雁", "text": "厨房刚出的，还热。" },
             { "type": "narration", "text": "油纸包被体温捂得温热。拆开一角——桂花糕，你最爱那种。" },
             { "type": "dialog", "speaker": "阿雁", "text": "快吃，别让夫人看见。" },
-            { "type": "narration", "text": "油纸一拆，甜味散出来。还冒着热气——她从灶上端水那会儿就揣上了，揣了一路。" },
-            { "type": "action", "text": "你两口就把糕点塞进嘴里，腮帮子鼓着，噎得直翻白眼。" },
+            { "type": "narration", "text": "油纸一拆，甜味散出来。还冒着热气。" },
+            { "type": "dialog", "speaker": "阿雁", "text": "灶上端水那会儿顺手拿的。" },
+            { "type": "action", "actor": "主角", "text": "你两口就把糕点塞进嘴里，腮帮子鼓着，噎得直翻白眼。" },
             { "type": "dialog", "speaker": "阿雁", "text": "小姐你嘴角也有渣。" },
-            { "type": "action", "text": "她小声说着，自己也笑了。" }
+            { "type": "action", "actor": "阿雁", "text": "她小声说着，自己别过脸去，不看你。" }
           ]
         },
 
-        { "type": "narration", "text": "窗外母亲的脚步又近了。你一把把油纸团塞进枕头底下，装模作样去拿手巾。" },
+        { "type": "narration", "text": "窗外母亲的脚步又近了。" },
+        { "type": "action", "actor": "主角", "text": "你一把把油纸团塞进枕头底下，装模作样去拿手巾。" },
         { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "磨蹭什么呢？你父亲可不爱等。" },
         {
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
-            { "type": "action", "text": "阿福一见母亲进来，立马站直了身子，缩着脖子不敢吭声。母亲伸手去拿墙上的书袋，阿福抢先一步取下来抱在怀里。" },
+            { "type": "action", "actor": "阿福", "text": "阿福一见母亲进来，立马站直了身子，缩着脖子不敢吭声。母亲伸手去拿墙上的书袋，阿福抢先一步取下来抱在怀里。" },
             { "type": "dialog", "speaker": "阿福", "text": "少爷，我给您拿着。" },
-            { "type": "action", "text": "他低着头走在前面，等你跟上去后，才又活泛起来。" }
+            { "type": "action", "actor": "阿福", "text": "他低着头走在前面，等你跟上去后，才又活泛起来。" }
           ],
           "female": [
-            { "type": "action", "text": "阿雁一见母亲进来，立马站直了身子，垂着手不敢吭声。母亲伸手去拿墙上的书袋，阿雁抢前一步取下来抱在怀里。" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁一见母亲进来，立马站直了身子，垂着手不敢吭声。母亲伸手去拿墙上的书袋，阿雁抢前一步取下来抱在怀里。" },
             { "type": "dialog", "speaker": "阿雁", "text": "小姐，我给您拿着。" },
-            { "type": "action", "text": "她低着头走在前面，等你跟上去后，才又活泛起来。" }
+            { "type": "action", "actor": "阿雁", "text": "她低着头走在前面，脚步轻快，等你跟上了，才悄悄回头看了你一眼。" }
           ]
         },
         {
@@ -93,18 +99,19 @@
           "condition": "protagonist_gender",
           "male": [
             { "type": "effect", "action": "show", "target": "阿福", "pos": "left", "expr": "neutral" },
-            { "type": "action", "text": "阿福把书袋往你手上一塞，自己缩去廊下蹲着，掏出啃了一半的糕点接着吃。" }
+            { "type": "action", "actor": "阿福", "text": "阿福把书袋往你手上一塞，自己缩去廊下蹲着，掏出啃了一半的糕点接着吃。" }
           ],
           "female": [
             { "type": "effect", "action": "show", "target": "阿雁", "pos": "left", "expr": "neutral" },
-            { "type": "action", "text": "阿雁把书袋往你手上一塞，自己缩去廊下站着，掏出啃了一半的糕点接着吃。" }
+            { "type": "action", "actor": "阿雁", "text": "阿雁把书袋往你手上一塞，自己缩去廊下站着，掏出啃了一半的糕点——咬了一口，又停了，把剩下大半块用油纸重新包好，揣回怀里。" }
           ]
         },
 
         { "type": "effect", "action": "show", "target": "沈伯远", "pos": "center", "expr": "stern" },
-        { "type": "action", "text": "《孟子》摊在他面前，另一侧搁着一盏茶，茶面上漂着桂花——母亲送来的，他自己从不带茶。" },
+        { "type": "action", "actor": "沈伯远", "text": "《孟子》摊在他面前，另一侧搁着一盏茶，茶面上漂着桂花——母亲送来的，他自己从不带茶。" },
         { "type": "dialog", "speaker": "沈伯远", "text": "坐。" },
-        { "type": "narration", "text": "你在他对面坐下。墙外的街道此刻已逐渐热闹了起来, 檐上不知道什么鸟在叫，一派生机盎然的景象" },
+        { "type": "action", "actor": "主角", "text": "你在他对面坐下。" },
+        { "type": "narration", "text": "墙外的街道此刻已热闹起来，檐上不知什么鸟在叫，一声接一声的。" },
 
         { "type": "dialog", "speaker": "沈伯远", "text": "昨日的功课，背来。" },
         { "type": "thought", "text": "完了。最后那段还没背熟……" },
@@ -112,21 +119,22 @@
         { "type": "narration", "text": "磕磕绊绊背了半段，中间卡了两次。父亲没说话，端起茶盏搁到一旁，给你留出接下去的空。" },
         { "type": "dialog", "speaker": "沈伯远", "text": "继续。" },
         { "type": "dialog", "speaker": "主角", "text": "……是故得乎丘民而为天子，得乎天子为诸侯……" },
-        { "type": "narration", "text": "最后几句顺了下来。父亲点了点头，合上书，指节在封皮上叩了两下。" },
+        { "type": "narration", "text": "最后几句顺了下来。" },
+        { "type": "action", "actor": "沈伯远", "text": "父亲点了点头，合上书，指节在封皮上叩了两下。" },
 
         { "type": "dialog", "speaker": "沈伯远", "text": "你知道我为什么让你先背这一段？" },
         { "type": "thought", "text": "不是很明白。《孟子》那么多章，偏偏天天考这一段。" },
         { "type": "dialog", "speaker": "主角", "text": "……因为重要？" },
         { "type": "dialog", "speaker": "沈伯远", "text": "哪里重要？" },
         { "type": "dialog", "speaker": "主角", "text": "书上说的，民为贵嘛……" },
-        { "type": "narration", "text": "父亲摇了摇头。" },
+        { "type": "action", "actor": "沈伯远", "text": "父亲摇了摇头。" },
         { "type": "dialog", "speaker": "沈伯远", "text": "你只记得结论，不知道为什么。" },
         { "type": "wait", "seconds": 0.5 },
-        { "type": "action", "text": "他抬手指了指院墙外面。墙那边传来卖馄饨的吆喝声，还有车轱辘碾过石板路的闷响。" },
+        { "type": "action", "actor": "沈伯远", "text": "他抬手指了指院墙外面。墙那边传来卖馄饨的吆喝声，还有车轱辘碾过石板路的闷响。" },
         { "type": "dialog", "speaker": "沈伯远", "text": "听见没有？外头那些声音。" },
         { "type": "dialog", "speaker": "主角", "text": "听见了……" },
         { "type": "dialog", "speaker": "沈伯远", "text": "开封城几十万人。每天谁种地、谁卖粮、谁修路——朝廷不管这些，那些人就活不下去。" },
-        { "type": "action", "text": "他收回手，目光落在合着的书上，声音轻了半分。" },
+        { "type": "action", "actor": "沈伯远", "text": "他收回手，目光落在合着的书上，声音轻了半分。" },
         { "type": "effect", "action": "expr_change", "target": "沈伯远", "expr": "solemn" },
         { "type": "dialog", "speaker": "沈伯远", "text": "「民为贵」不是圣人说漂亮话。没那些人，什么社稷、什么天子，都立不住。" },
         { "type": "wait", "seconds": 0.5 },
@@ -139,53 +147,57 @@
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
-            { "type": "action", "text": "廊下的阿福手里的糕点忘了往嘴里送，缩了缩身子，低着头偷偷瞄你。" }
+            { "type": "action", "actor": "阿福", "text": "廊下的阿福手里的糕点忘了往嘴里送，缩了缩身子，低着头偷偷瞄你。" }
           ],
           "female": [
-            { "type": "action", "text": "廊下的阿雁手里的糕点忘了往嘴里送，缩了缩身子，低着头偷偷瞄你。" }
+            { "type": "action", "actor": "阿雁", "text": "廊下的阿雁手里的糕点忘了往嘴里送，眼睛一会儿看看父亲，一会儿看看你，手指无意识地捏着油纸角。" }
           ]
         },
 
         { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "amused" },
-        { "type": "action", "text": "脚步声从廊下传来。母亲提着铜壶走过来，先给父亲的茶盏续上热水，再给你倒了一碗——晾了一会儿才递过来。" },
+        { "type": "action", "actor": "柳蕙心", "text": "脚步声从廊下传来。母亲提着铜壶走过来，先给父亲的茶盏续上热水，再给你倒了一碗——晾了一会儿才递过来。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "又来了，孩子多大就讲这些。" },
         { "type": "effect", "action": "expr_change", "target": "沈伯远", "expr": "sheepish" },
-        { "type": "action", "text": "父亲咳了一声，把目光收回来。" },
+        { "type": "action", "actor": "沈伯远", "text": "父亲咳了一声，把目光收回来。" },
         { "type": "dialog", "speaker": "沈伯远", "text": "……那你讲。" },
         { "type": "effect", "action": "expr_change", "target": "柳蕙心", "expr": "gentle" },
 
-        { "type": "action", "text": "母亲挨着坐下来，从袖子里抽出一本卷了角的话本。" },
+        { "type": "action", "actor": "柳蕙心", "text": "母亲挨着坐下来，从袖子里抽出一本卷了角的话本。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "你父亲讲的那些太远了，我给你讲个近的。" },
-        { "type": "narration", "text": "她翻开话本，声音不急不慢。讲的是一个地方小官在权贵威逼之下守底线的事。没什么大起大落，就是一个小人物在夹缝里一个又一个的选择。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她翻开话本，声音不急不慢。" },
+        { "type": "narration", "text": "母亲讲的不是什么大人物，就是一个穷县的小知县，在夹缝里头一个选择接一个选择地熬。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "那人姓赵，在一个穷县做知县。穷到什么地步呢——全县的税加一块儿，还不够上头一次宴席的花销。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "可上头还要加税。他不肯签，硬拖着。上头派人来查账，他把人灌醉了送走；再来人，他就哭穷，说县里闹了灾，颗粒无收。" },
         { "type": "dialog", "speaker": "主角", "text": "其实没灾是吧" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "当然没有。但他那一县的老百姓，那年冬天的口粮就这么保住了。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "上面的人也不傻，他这么糊弄，就让他在那地方待了十年。别人升的升、调的调，就他没动过。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "他不是不想往上走。可升了官就得走，他一走，来的人还管不管那些百姓？" },
-        { "type": "action", "text": "她顿了一下，手指在话本封面上轻轻叩了叩。" },
-        { "type": "dialog", "speaker": "柳蕙心", "text": "所以他宁可慢慢来。" },
-        { "type": "thought", "text": "父亲讲大义，母亲讲人。她总是把那些被道理压着的人拆开了给你看——他们怎么疼，怎么扛。" },
-        { "type": "dialog", "speaker": "柳蕙心", "text": "做官不单是往上走，也是护住脚底下的人" },
-        { "type": "action", "text": "她合上话本，看着你。" },
-        { "type": "dialog", "speaker": "主角", "text": "我记住了。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她顿了一下，手指在话本封面上轻轻叩了叩。" },
+        { "type": "dialog", "speaker": "柳蕙心", "text": "十年里他那县没饿死过人。别的县有，他没有。" },
+        { "type": "thought", "text": "十年。没饿死过人。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她合上话本，看着你。" },
+        { "type": "dialog", "speaker": "主角", "text": "那他后来呢？" },
+        { "type": "dialog", "speaker": "柳蕙心", "text": "还在那儿呢。" },
+        { "type": "dialog", "speaker": "柳蕙心", "text": "你说，他傻不傻？" },
+        { "type": "thought", "text": "……说不清楚。好像傻，又好像不傻。" },
+        { "type": "dialog", "speaker": "柳蕙心", "text": "傻人有傻人的福气。他那一县的人，年年冬天有口粮吃——这福气，聪明人给不了。" },
 
-        { "type": "action", "text": "母亲笑了笑，伸手揉了揉你的头。父亲端起茶盏喝了一口，什么也没说。" },
+        { "type": "action", "actor": "多人", "text": "母亲笑了笑，伸手揉了揉你的头。父亲端起茶盏喝了一口，什么也没说。" },
         {
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
             { "type": "dialog", "speaker": "阿福", "text": "少爷！该去私塾了！" },
-            { "type": "action", "text": "阿福已经把书袋背上了，站在廊下朝你招手。" }
+            { "type": "action", "actor": "阿福", "text": "阿福已经把书袋背上了，站在廊下朝你招手。" }
           ],
           "female": [
-            { "type": "dialog", "speaker": "阿雁", "text": "小姐！该去私塾了！" },
-            { "type": "action", "text": "阿雁已经把书袋背上了，站在廊下朝你招手。" }
+            { "type": "dialog", "speaker": "阿雁", "text": "小姐，该去私塾了。" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁已经把书袋背上了，站在廊下，朝你这边探了探身子。" }
           ]
         },
         { "type": "dialog", "speaker": "沈伯远", "text": "去吧。先学好本事，往后才能撑起这个家。" },
         { "type": "thought", "text": "他说得很慢。" },
-        { "type": "action", "text": "你起身往外走。父亲在身后端着茶盏，没抬头，但你的背影刚一迈出门槛，他的目光就跟上来了。" },
+        { "type": "action", "actor": "主角", "text": "你起身往外走。父亲在身后端着茶盏，没抬头，但你的背影刚一迈出门槛，他的目光就跟上来了。" },
         {
           "type": "branch",
           "condition": "protagonist_gender",
@@ -193,7 +205,10 @@
           "female": [{ "type": "effect", "action": "hide", "target": "阿雁" }]
         },
         { "type": "effect", "action": "hide", "target": "柳蕙心" },
-        { "type": "effect", "action": "hide", "target": "沈伯远" }
+        { "type": "effect", "action": "hide", "target": "沈伯远" },
+
+        { "type": "tutorial", "system": "建筑系统", "text": "将角色卡放入建筑后，建筑开始运作。成长类建筑（如私塾）能提升角色的能力值。每个建筑有固定槽位数，试试看——点击你的角色卡，放入私塾的槽位中。" },
+        { "type": "pause", "reason": "place_character", "detail": "主角→私塾", "objective": "obj_m01_01" }
       ]
     },
 
@@ -201,7 +216,7 @@
       "id": "m01_tutorial_building",
       "background": "bg_shenjia_schoolroom",
       "bgm": null,
-      "characters": ["柳蕙心", "阿福", "阿雁"],
+      "characters": ["柳蕙心", "阿福", "阿雁", "周先生", "沈致远"],
       "script": [
         { "type": "bg_change", "background": "bg_shenjia_schoolroom", "transition": "fade" },
         {
@@ -209,34 +224,33 @@
           "condition": "protagonist_gender",
           "male": [
             { "type": "effect", "action": "show", "target": "阿福", "pos": "left", "expr": "neutral" },
-            { "type": "narration", "text": "穿过回廊到了私塾。阿福替你掀开门帘，自己缩在门框边上，探头往里看。" }
+            { "type": "narration", "text": "穿过回廊到了私塾。" },
+            { "type": "action", "actor": "阿福", "text": "阿福替你掀开门帘，自己缩在门框边上，探头往里看。" }
           ],
           "female": [
             { "type": "effect", "action": "show", "target": "阿雁", "pos": "left", "expr": "neutral" },
-            { "type": "narration", "text": "穿过回廊到了私塾。阿雁替你掀开门帘，自己缩在门框边上，探头往里看。" }
+            { "type": "narration", "text": "穿过回廊到了私塾。" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁替你掀开门帘，自己缩在门框边上，探头往里看。" }
           ]
         },
 
-        { "type": "narration", "text": "私塾里已经坐了四五个孩子，年纪参差，有族中的，也有旁支的。正中一张长案，案上笔墨纸砚摆得齐整。靠墙的书架上摞着经史，落了一层薄灰。" },
+        { "type": "narration", "text": "私塾里已经坐了几个孩子，年纪参差，有族中的，也有旁支的。正中一张长案，案上笔墨纸砚摆得齐整。靠墙的书架上摞着经史，落了一层薄灰。" },
         { "type": "narration", "text": "教书先生是个干瘦老头，姓周，正眯着眼听一个孩子背书，手指有一搭没一搭地敲着戒尺。" },
-        { "type": "action", "text": "周先生抬眼看见你，戒尺一收——" },
+        { "type": "action", "actor": "周先生", "text": "周先生抬眼看见你，戒尺一收——" },
         { "type": "dialog", "speaker": "周先生", "text": "沈家小郎来了？那边，空着的位置坐。" },
-        { "type": "action", "text": "他朝窗边一指。靠窗的长案上空着一个位子，砚台已经磨好了墨，书页翻到了今天该读的那一折。" },
-        { "type": "tutorial", "system": "回合推进", "text": "每月为一个回合。每回合你可以将家族成员的角色卡放入建筑中，建筑在回合结算时产出资源。试试看——点击你的角色卡，放入私塾的槽位中。" },
-        { "type": "pause", "reason": "place_character", "detail": "主角→私塾" },
-
-        { "type": "tutorial", "system": "建筑系统", "text": "角色放入建筑后，建筑开始运作。成长类建筑（如私塾）提升角色能力值；产出类建筑（如商铺）产出金钱和声望。每个建筑有固定槽位数，合理分配角色是家族经营的核心。" },
-        { "type": "action", "text": "你在窗边坐下来。竹帘漏进来的光刚好落在书页上。" },
-        { "type": "narration", "text": "旁边一个胖墩墩的男孩冲你挤了挤眼，拿胳膊肘碰了碰你，又赶紧缩回去装模作样地翻书。" },
+        { "type": "action", "actor": "周先生", "text": "他朝窗边一指。靠窗的长案上空着一个位子，砚台已经磨好了墨，书页翻到了今天该读的那一折。" },
+        { "type": "narration", "text": "你在窗边坐下来。竹帘漏进来的光刚好落在书页上。" },
+        { "type": "narration", "text": "旁边的沈致远冲你挤了挤眼，拿胳膊肘碰了碰你，又赶紧缩回去装模作样地翻书。周围几个孩子也都抬头看了你一眼，又低下头去。" },
         { "type": "narration", "text": "周先生一句一句地领读，戒尺拍一下案角便换一段。你跟着念，嘴上念着，心却跑到了窗外。日影一寸一寸地挪，不知什么时候，已经从脚底爬到了桌沿。" },
         { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-        { "type": "narration", "text": "门口一阵轻轻的脚步声。母亲的身影出现在门口，没进屋，只是站在门槛外面。" },
-        { "type": "action", "text": "她朝你招了招手，等你走到跟前，伸手替你把衣襟理平，指尖顺带拈掉了肩上粘着的一片落叶。" },
-        { "type": "action", "text": "她没说话，把你胸前的书袋带子正了正。" },
+        { "type": "narration", "text": "门口一阵轻轻的脚步声。" },
+        { "type": "action", "actor": "柳蕙心", "text": "母亲的身影出现在门口，没进屋，只是站在门槛外面。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她朝你招了招手，等你走到跟前，伸手替你把衣襟理平，指尖顺带拈掉了肩上粘着的一片落叶。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她没说话，把你胸前的书袋带子正了正。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "你父亲说你念书有悟性。" },
-        { "type": "action", "text": "她顿了一下——" },
+        { "type": "action", "actor": "柳蕙心", "text": "她顿了一下——" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "好好念。" },
-        { "type": "action", "text": "你要转身回去，她忽然拉了一下你的袖子，声音压得更低——" },
+        { "type": "action", "actor": "多人", "text": "你要转身回去，她忽然拉了一下你的袖子，声音压得更低——" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "枕头底下那油纸包，下次藏好些。" },
         { "type": "thought", "text": "……她早看见了。" },
         { "type": "effect", "action": "hide", "target": "柳蕙心" },
@@ -244,10 +258,10 @@
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
-            { "type": "action", "text": "门帘外面，阿福缩着脖子冲你吐了吐舌头。" }
+            { "type": "action", "actor": "阿福", "text": "门帘外面，阿福缩着脖子冲你吐了吐舌头。" }
           ],
           "female": [
-            { "type": "action", "text": "门帘外面，阿雁缩着脖子冲你吐了吐舌头。" }
+            { "type": "action", "actor": "阿雁", "text": "门帘外面，阿雁冲你做了个鬼脸，小声嘀咕了句「笨手笨脚的」——说你刚才差点被母亲发现的样子。" }
           ]
         },
         {
@@ -276,45 +290,45 @@
           "condition": "protagonist_gender",
           "male": [
             { "type": "effect", "action": "show", "target": "阿福", "pos": "left", "expr": "neutral" },
-            { "type": "action", "text": "阿福跟在后头出来，小心翼翼地伸了个懒腰，正要跟你说话，被一阵叽叽喳喳的叫声打断了。" }
+            { "type": "action", "actor": "阿福", "text": "阿福跟在后头出来，小心翼翼地伸了个懒腰，正要跟你说话，被一阵叽叽喳喳的叫声打断了。" }
           ],
           "female": [
             { "type": "effect", "action": "show", "target": "阿雁", "pos": "left", "expr": "neutral" },
-            { "type": "action", "text": "阿雁跟在后头出来，正要跟你说话，被一阵叽叽喳喳的叫声打断了。" }
+            { "type": "action", "actor": "阿雁", "text": "阿雁跟在后头出来，正要跟你说话，被一阵叽叽喳喳的叫声打断了。" }
           ]
         },
 
         { "type": "narration", "text": "檐下一阵尖细的叫声——不是麻雀。" },
-        { "type": "action", "text": "你抬头看去。两只燕子衔着泥草，在屋檐梁柱间来回穿梭。泥点一点一点垒上去，新巢已经有了浅浅的碗形。" },
+        { "type": "action", "actor": "主角", "text": "你抬头看去。两只燕子衔着泥草，在屋檐梁柱间来回穿梭。泥点一点一点垒上去，新巢已经有了浅浅的碗形。" },
         {
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
             { "type": "dialog", "speaker": "阿福", "text": "少爷，燕子！去年没有燕子来的。" },
-            { "type": "action", "text": "阿福仰着头看，眼睛跟着燕子转来转去，声音压得低低的，像怕吵着谁。" }
+            { "type": "action", "actor": "阿福", "text": "阿福仰着头看，眼睛跟着燕子转来转去，声音压得低低的，像怕吵着谁。" }
           ],
           "female": [
-            { "type": "dialog", "speaker": "阿雁", "text": "小姐，燕子！去年没有燕子来的。" },
-            { "type": "action", "text": "阿雁仰着头看，眼睛跟着燕子转来转去，声音压得低低的，像怕吵着谁。" }
+            { "type": "dialog", "speaker": "阿雁", "text": "小姐，燕子！去年没来过的。" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁仰着头看，眼睛跟着燕子转，脚步跟着挪了几步，声音压得低低的。" }
           ]
         },
 
         { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-        { "type": "action", "text": "母亲站在廊下，也在看。手里端着茶盏，忘了喝。" },
+        { "type": "action", "actor": "柳蕙心", "text": "母亲站在廊下，也在看。手里端着茶盏，忘了喝。" },
         { "type": "dialog", "speaker": "柳蕙心", "text": "这是好兆头。" },
-        { "type": "action", "text": "她侧过头，朝你笑了笑。日光刚好落在她脸上，鬓角碎发在风里轻轻飘。" },
+        { "type": "action", "actor": "柳蕙心", "text": "她侧过头，朝你笑了笑。日光刚好落在她脸上，鬓角碎发在风里轻轻飘。" },
         {
           "type": "branch",
           "condition": "protagonist_gender",
           "male": [
-            { "type": "action", "text": "阿福拉了拉你的袖子，指着屋檐，声音压得更低了——" },
+            { "type": "action", "actor": "阿福", "text": "阿福拉了拉你的袖子，指着屋檐，声音压得更低了——" },
             { "type": "dialog", "speaker": "阿福", "text": "少爷你看，那只衔着草飞过去了。" },
-            { "type": "action", "text": "母亲看了他一眼，没忍住笑了一下。" }
+            { "type": "action", "actor": "柳蕙心", "text": "母亲看了他一眼，没忍住笑了一下。" }
           ],
           "female": [
-            { "type": "action", "text": "阿雁拉了拉你的袖子，指着屋檐，声音压得更低了——" },
-            { "type": "dialog", "speaker": "阿雁", "text": "小姐你看，那只衔着草飞过去了。" },
-            { "type": "action", "text": "母亲看了她一眼，没忍住笑了一下。" }
+            { "type": "action", "actor": "阿雁", "text": "阿雁拉了拉你的袖子，指着屋檐，声音压得更低了——" },
+            { "type": "dialog", "speaker": "阿雁", "text": "小姐你看，那只衔着草——笨手笨脚的。" },
+            { "type": "action", "actor": "阿雁", "text": "她捂着嘴笑了一下，又赶紧看母亲在不在。" }
           ]
         },
 
@@ -327,23 +341,23 @@
           "male": [
             { "type": "dialog", "speaker": "阿福", "text": "少爷，你说是它们自己找来的，还是谁引来的？" },
             { "type": "dialog", "speaker": "主角", "text": "大概是自己找来的吧。" },
-            { "type": "action", "text": "阿福点了点头，又仰头看了一会儿，忽然说——" },
+            { "type": "action", "actor": "阿福", "text": "阿福点了点头，又仰头看了一会儿，忽然说——" },
             { "type": "dialog", "speaker": "阿福", "text": "那它们以后每年都会回来吗？" },
             { "type": "thought", "text": "燕子认巢。只要巢还在，它们年年都会回来。" },
             { "type": "dialog", "speaker": "主角", "text": "会的。" }
           ],
           "female": [
-            { "type": "dialog", "speaker": "阿雁", "text": "小姐，你说是它们自己找来的，还是谁引来的？" },
-            { "type": "dialog", "speaker": "主角", "text": "大概是自己找来的吧。" },
-            { "type": "action", "text": "阿雁点了点头，又仰头看了一会儿，忽然说——" },
-            { "type": "dialog", "speaker": "阿雁", "text": "那它们以后每年都会回来吗？" },
+            { "type": "action", "actor": "阿雁", "text": "阿雁仰头看了一会儿，忽然说——" },
+            { "type": "dialog", "speaker": "阿雁", "text": "小姐，那它们以后每年都会回来吗？" },
             { "type": "thought", "text": "燕子认巢。只要巢还在，它们年年都会回来。" },
             { "type": "dialog", "speaker": "主角", "text": "会的。" }
           ]
         },
 
         { "type": "narration", "text": "檐下叽叽喳喳地热闹着。日头又暖了几分，桂花香从院墙那边飘过来。" },
-        { "type": "wait", "seconds": 1 }
+        { "type": "wait", "seconds": 1 },
+        { "type": "tutorial", "system": "回合推进", "text": "本月剧情已结束。点击「下一回合」结算本月产出，进入下一个月。" },
+        { "type": "pause", "reason": "advance_turn", "detail": "结算本月并进入下一回合", "objective": "obj_m01_02" }
       ]
     }
   ]
