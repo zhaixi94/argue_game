@@ -1,0 +1,28 @@
+{
+  "id": "quest_m01",
+  "chapter": "第1期·新手教学",
+  "month": 1,
+  "title": "初醒·父训",
+  "description": "在沈家的第一个清晨——母亲催你起床，父亲考你背书，私塾里等你入座。",
+  "objectives": [
+    {
+      "id": "obj_m01_01",
+      "description": "将主角放入私塾",
+      "type": "place_character",
+      "target": "主角",
+      "building": "私塾"
+    },
+    {
+      "id": "obj_m01_02",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "学识",
+      "value": 3
+    }
+  ]
+}
