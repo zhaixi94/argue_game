@@ -12,14 +12,15 @@
     },
 
     "dialog": {
-      "desc": "角色对话。可附带effect字段控制立绘变化",
+      "desc": "角色对话。emotion字段控制该句使用哪款立绘表情；可附带effect字段控制立绘变化",
       "fields": {
         "type": "dialog",
         "speaker": "说话人姓名",
+        "emotion": "说话时情绪，决定使用哪款立绘表情差分。可选值见emotions",
         "text": "对话内容",
         "effect": "(可选) 立绘特效，结构见effect指令"
       },
-      "example": { "type": "dialog", "speaker": "柳蕙心", "text": "醒了？", "effect": { "show": { "pos": "right", "expr": "gentle" } } }
+      "example": { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "醒了？", "effect": { "show": { "pos": "right", "expr": "gentle" } } }
     },
 
     "thought": {
@@ -32,24 +33,53 @@
     },
 
     "action": {
-      "desc": "动作描写，用于角色肢体动作、表情变化以外的行为描写",
+      "desc": "动作描写，用于角色肢体动作、表情变化以外的行为描写。emotion字段控制该动作期间角色使用哪款立绘表情",
       "fields": {
         "type": "action",
         "actor": "动作执行者姓名（必填）。主角动作为\"主角\"；多人协作动作为\"多人\"；无特定角色的环境动作可省略",
-        "text": "动作描写内容",
-        "effect": "(可选) 动作附带的画面效果，见action_effects"
+        "emotion": "动作时情绪，决定使用哪款立绘表情差分。可选值见emotions",
+        "vfx": "(可选) 立绘视觉特效，仅在有明显物理冲击或动态时使用，轻微动作不加。可选值见action_vfx",
+        "text": "动作描写内容"
       },
-      "example": { "type": "action", "actor": "阿福", "text": "阿福一把抢过书袋，跑在前面。" }
+      "example": { "type": "action", "actor": "陆子衡", "emotion": "cheerful", "vfx": "bounce", "text": "他蹲在树杈上，脚踩着枝一颠一颠的，咧着嘴朝你招手——" }
     },
 
-    "action_effects": {
-      "_note": "action指令effect字段可选值，引擎据此播放对应画面效果",
-      "screen_shake": "画面摇晃，用于撞击、重击、拍桌等力度动作",
-      "flash": "画面闪白，用于突发的强光、惊吓瞬间",
-      "fade_to_black": "渐黑，用于昏厥、失去意识等",
-      "zoom_in": "画面拉近，用于强调某处细节",
+    "action_vfx": {
+      "_note": "action指令vfx字段可选值，引擎据此对actor立绘播放对应动画。仅在有明确物理冲击/动态感时添加，普通走动、点头、说话等轻微动作不需要",
+      "shake": {
+        "desc": "立绘短促抖动",
+        "visual": "角色立绘快速左右晃动2-3次后复位",
+        "use_when": "碰撞、惊吓、使劲拍打、窘迫缩身等有明显力度或突然性的动作",
+        "examples": ["脚下一滑踉跄", "吓了一跳缩回去", "使劲拍裤子上的青苔", "一把拽住肩膀往里拉"]
+      },
+      "bounce": {
+        "desc": "立绘弹跳",
+        "visual": "角色立绘向上弹起再落回原位，模拟跳跃/起身的动态感",
+        "use_when": "跳起、坐起、一屁股坐下、兴奋的大幅度肢体动作",
+        "examples": ["从马车上跳下来", "翻身坐起来", "一屁股坐在台阶上", "摆了个架势"]
+      },
+      "tremble": {
+        "desc": "立绘持续轻颤",
+        "visual": "角色立绘持续细微左右颤抖，幅度比shake小但持续更久",
+        "use_when": "紧张、害怕、不敢说话等持续性微弱颤抖",
+        "examples": ["缩在门后不敢出来", "嘴张了张名字说不出来", "紧张地攥着门框"]
+      },
+      "nudge": {
+        "desc": "立绘轻推碰撞反馈",
+        "visual": "角色立绘向某方向微微偏移后复位，模拟被推/拽/碰的受力感",
+        "use_when": "拽、推、拍、拨等有物理接触且力度轻柔的动作",
+        "examples": ["一把拽住袖子", "推了推往路里边走", "拨开碎发", "揉了揉脑袋"]
+      }
+    },
+
+    "screen_effects": {
+      "_note": "画面级特效（非立绘级），用于全屏视觉冲击。当前脚本未使用，预留供后续场景调用",
+      "screen_shake": "全屏摇晃，用于撞击、重击等力度动作",
+      "flash": "全屏闪白，用于突发惊吓瞬间",
+      "fade_to_black": "渐黑，用于昏厥、失去意识",
+      "zoom_in": "画面拉近，用于强调细节",
       "zoom_out": "画面拉远，用于展现全局",
-      "vignette": "暗角加深，用于压抑、不安的氛围"
+      "vignette": "暗角加深，用于压抑、不安氛围"
     },
 
     "branch": {
@@ -79,9 +109,10 @@
         "action": "特效动作类型，见effect_actions",
         "target": "目标角色姓名",
         "pos": "(show/move时必填) 立绘位置",
-        "expr": "(show/expr_change时必填) 表情标识"
+        "expr": "(show/expr_change时必填) 表情标识，取值见emotions段"
       },
-      "example": { "type": "effect", "action": "show", "target": "沈伯远", "pos": "center", "expr": "stern" }
+      "example": { "type": "effect", "action": "show", "target": "沈伯远", "pos": "center", "expr": "stern" },
+      "_note": "expr值应从emotions段的可选值中选取（如neutral/gentle/stern等）"
     },
 
     "bg_change": {
@@ -165,23 +196,12 @@
   },
 
   "expressions": {
-    "_note": "表情标识与角色立绘差分图对应，每个角色不一定拥有全部表情",
-    "gentle": "温柔/柔和，用于母亲日常说话、关怀时",
-    "cheerful": "开朗/活泼，用于阿福阿雁等年轻角色的日常状态",
-    "neutral": "中性/平静，默认表情，无强烈情绪",
-    "stern": "严厉/肃穆，用于父亲教经、训话时",
-    "solemn": "庄重/凝重，用于角色陷入深思或说出郑重之语时",
-    "amused": "觉得有趣/忍俊不禁，用于轻松互动时",
-    "sheepish": "窘迫/不好意思，用于被戳穿或尴尬时",
-    "sad": "忧伤/低落",
-    "angry": "愤怒/生气",
-    "worried": "担忧/忧虑",
-    "surprised": "惊讶/意外",
-    "determined": "坚定/决然"
+    "_note": "旧版表情标识，仅作历史参考。新脚本统一使用emotions字段（见emotions段），expr字段值应从emotions中选取",
+    "_deprecated": true
   },
 
   "dialog_inline_effect": {
-    "desc": "dialog指令可通过effect字段在对话同时触发立绘变化，避免单独写effect指令",
+    "desc": "dialog指令可通过effect字段在对话同时触发立绘变化，避免单独写effect指令。expr值应从emotions段选取",
     "structure": {
       "show": { "pos": "立绘位置", "expr": "表情" },
       "hide": {},
@@ -192,7 +212,7 @@
       "type": "dialog",
       "speaker": "柳蕙心",
       "text": "又来了，孩子多大就讲这些。",
-      "effect": { "show": { "pos": "right", "expr": "amused" } }
+      "effect": { "show": { "pos": "right", "expr": "gentle" } }
     }
   },
 
@@ -206,5 +226,78 @@
   "bgm_ids": {
     "_note": "背景音乐资源ID命名规范：bgm_场景_情绪",
     "bgm_shenjia_morning": "沈家晨间，温暖日常氛围"
+  },
+
+  "emotions": {
+    "_note": "action/dialog的emotion字段可选值。引擎据此选择对应角色的立绘表情差分。每个角色按戏份制作其中几款即可，不必全做",
+    "neutral": {
+      "desc": "平静/默认",
+      "visual": "无明显情绪，面部放松，日常状态",
+      "typical": "日常对话、普通动作、不带强烈情绪的场景"
+    },
+    "happy": {
+      "desc": "开心/满足",
+      "visual": "嘴角上扬微笑，眉眼舒展，但不过分张扬",
+      "typical": "吃到好吃的、收到礼物、由衷的高兴"
+    },
+    "cheerful": {
+      "desc": "兴奋/活泼",
+      "visual": "大笑或咧嘴，眉飞色舞，比happy更外放",
+      "typical": "陆子衡/陆芷薇日常、嬉闹追跑、调皮捣蛋",
+      "vs_happy": "cheerful比happy更强烈更外放，适合活泼角色的大情绪"
+    },
+    "sad": {
+      "desc": "难过/忧伤",
+      "visual": "眉头下垂，嘴角下沉，目光低落",
+      "typical": "叹气、失落、压抑的情感"
+    },
+    "cry": {
+      "desc": "哭泣/流泪",
+      "visual": "有可见眼泪，嘴巴可能张开或抿紧",
+      "typical": "伤心落泪、感动落泪",
+      "vs_sad": "cry有可见眼泪，sad没有"
+    },
+    "angry": {
+      "desc": "生气/不满",
+      "visual": "眉头紧锁，嘴角下压，面部紧绷",
+      "typical": "被惹恼、抱怨、质问",
+      "vs_stern": "angry带怒意，stern不带怒意只是严肃"
+    },
+    "stern": {
+      "desc": "严厉/严肃",
+      "visual": "面色肃穆，目光锐利，不苟言笑",
+      "typical": "父亲教经、先生训话、严肃的安全提醒",
+      "vs_angry": "stern不带怒意，是不苟言笑的威严；angry是带情绪的生气"
+    },
+    "surprised": {
+      "desc": "惊讶/意外",
+      "visual": "眉毛挑起，嘴微张，眼神略睁大",
+      "typical": "意外发现、没想到的事",
+      "vs_scared": "surprised是意外不帶恐惧，scared是带恐惧的惊"
+    },
+    "scared": {
+      "desc": "害怕/惊恐",
+      "visual": "瞳孔缩小，身体后缩，面露惧色",
+      "typical": "阿福/阿雁被吓到、真正的恐惧",
+      "vs_surprised": "scared带恐惧而surprised不带"
+    },
+    "shy": {
+      "desc": "害羞/窘迫/内向",
+      "visual": "脸红或目光闪躲，嘴角可能微翘但不安",
+      "typical": "被戳穿、不好意思、尴尬、阿福/阿雁的日常内向状态",
+      "vs_scared": "shy是窘迫/内向，不一定害怕；scared是明确恐惧"
+    },
+    "gentle": {
+      "desc": "温柔/慈爱/关怀",
+      "visual": "眼神柔和，浅笑或无笑，整体温暖",
+      "typical": "母亲关怀、长姐照顾、保护性动作",
+      "vs_happy": "gentle不强调开心，强调温暖/关切/守护"
+    },
+    "worried": {
+      "desc": "担忧/不安",
+      "visual": "眉头微蹙，嘴角平直，目光忧虑",
+      "typical": "担心被长辈发现、牵挂不安",
+      "vs_sad": "worried是牵挂/不安，不是低落；sad是已经难过了"
+    }
   }
 }
