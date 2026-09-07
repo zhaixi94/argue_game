@@ -1,0 +1,32 @@
+{
+  "id": "quest_m02",
+  "chapter": "第1期·新手教学",
+  "month": 2,
+  "title": "母教·旧友",
+  "description": "陆家旧友来访，二叔拽你逛集市——日子一天天过，沈家院墙里外各有各的热闹。",
+  "objectives": [
+    {
+      "id": "obj_m02_01",
+      "description": "投入资源点到私塾，查看产出变化",
+      "type": "invest_resource",
+      "building": "私塾"
+    },
+    {
+      "id": "obj_m02_02",
+      "description": "结束本月，进入下一回合, 触发并完成学识填字小游戏",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "学识",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "银票·二十贯",
+      "quantity": 1
+    }
+  ]
+}
