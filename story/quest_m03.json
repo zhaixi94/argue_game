@@ -1,0 +1,38 @@
+{
+  "id": "quest_m03",
+  "chapter": "第1期·新手教学",
+  "month": 3,
+  "title": "方略·夜话",
+  "description": "父亲带你进祠堂看那幅治家方略图，长姐在门口等你。回家的巷子里，一个灰袍人在侧门旁低语。夜里母亲讲了一个不一样的故事。",
+  "objectives": [
+    {
+      "id": "obj_m03_01",
+      "description": "解锁科技树起始节点",
+      "type": "unlock_tech_node",
+      "tech_tree": "家族之路"
+    },
+    {
+      "id": "obj_m03_02",
+      "description": "使用方略卷轴完成当前正在研究的科技节点",
+      "type": "use_item",
+      "item": "方略卷轴"
+    },
+    {
+      "id": "obj_m03_03",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "学识",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "声望·小幅",
+      "quantity": 1
+    }
+  ]
+}
