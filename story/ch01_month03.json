@@ -191,8 +191,6 @@
           { "type": "narration", "text": "灯吹了。屋里暗下来，月光从窗棂照进来，在地上画了几道白。" },
           { "type": "thought", "text": "早些把本事念出来，做到能碰着旧档的位置……" },
           { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你翻了个身，闭上眼，虫声慢慢远了。" },
-          { "type": "wait", "seconds": 1 },
-          { "type": "tutorial", "system": "回合推进", "text": "本月剧情已结束。点击「下一回合」结算本月产出，进入下一个月。" },
           { "type": "pause", "reason": "advance_turn", "detail": "结算本月并进入下一回合", "objective": "obj_m03_03" }
       ]
     }
