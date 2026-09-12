@@ -503,8 +503,6 @@
                 ]
             },
             { "type": "narration", "text": "你低头看了一眼手里的糖人——孙悟空举着金箍棒，还没舍得咬。" },
-            { "type": "wait", "seconds": 0.5 },
-            { "type": "tutorial", "system": "回合推进", "text": "本月剧情已结束。点击「下一回合」结算本月产出，进入下一个月。" },
             { "type": "pause", "reason": "advance_turn", "detail": "结算本月并进入下一回合", "objective": "obj_m02_02" }
         ]
     }
