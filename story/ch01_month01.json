@@ -10,15 +10,24 @@
         "bgm": { "track": "bgm_shenjia_morning", "action": "play", "fade": 2 },
         "characters": ["柳蕙心", "阿福", "阿雁"],
         "script":         [
-            { "type": "narration", "text": "窗棂上映着暖黄的光。你翻了个身，被褥里还裹着炭盆的余温，屋角铜漏滴答作响。" },
-            { "type": "thought", "text": "……再睡一觉。" },
+            { "type": "narration", "text": "外面的天色开始蒙蒙亮起，窗棂上映着暖黄的光。" },
+            { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你翻了个身，被褥里还裹着炭盆的余温，屋角铜漏滴答作响" },
+            { "type": "thought", "text": "什么时候了……" },
+            { "type": "thought", "text": "不管了……再睡一觉。" },
             { "type": "narration", "text": "可院中已经闹腾起来了。扫帚扫过青砖的沙沙声、井水灌进木桶的咕咚声、灶房那边飘来的米粥香气——沈家的早晨从来不等赖床的人。" },
+            { "type": "narration", "text": "屋外传来了脚步声，由远及近，听着是往自己房间这边走来了" },
             { "type": "narration", "text": "脚步声到了门前。门被轻轻推开一道缝。" },
             { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲半个身子探进来，围裙上的面粉还没拍干净，簪子歪了一点也没顾上扶。她先把窗根底下的炭盆往门边挪了挪，又拿手背试了试烟熏不熏人。" },
-            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "醒了？你父亲今日要考你背书，快起来，别让他等。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲半个身子探进来，围裙上的面粉还没拍干净，簪子歪了一点也没顾上扶。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "她走进来，先把窗根底下的炭盆往门边挪了挪，又拿手背试了试烟熏不熏人。" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "醒了？" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲走到床边，轻轻抚摸你的额头，温柔的尝试唤醒你" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "你父亲今日要考你背书，快起来，别让他等。" },
             { "type": "thought", "text": "又是背书……昨天那段还没背利索呢。" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲没等你应声就走了，灶上粥还看着火。脚步声远了。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲看出你不想动，弯腰把散在床头的衣裳拾起来，在手里抖了抖灰，搭在床栏上——" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "衣裳我搁这儿了，先穿暖了再出去。灶上粥还看着火，我先去揭一揭锅。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "她走到门口又回过头来，把你踢到床尾的被子拉上去盖了盖——不是怕你冷，是顺手惯了。" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "水阿福给你端来了，洗把脸醒醒神。" },
             { "type": "effect", "action": "hide", "target": "柳蕙心" },
             { "type": "narration", "text": "你正磨蹭着，另一阵脚步已经冲到了门口——这回可没敲门。" },
             {
@@ -58,17 +67,32 @@
             { "type": "narration", "text": "窗外母亲的脚步又近了。" },
             { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你一把把油纸团塞进枕头底下，装模作样去拿手巾。" },
             { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "磨蹭什么呢？你父亲可不爱等。" },
+            { "type": "narration", "text": "门帘一响，母亲端着一碟小菜进来了。" },
             {
                 "type": "branch",
                 "condition": "protagonist_gender",
                 "male": [
-                    { "type": "action", "actor": "阿福", "emotion": "scared", "vfx": "bounce", "text": "阿福一见母亲进来，立马站直了身子，缩着脖子不敢吭声。母亲伸手去拿墙上的书袋，阿福抢先一步取下来抱在怀里。" },
+                    { "type": "action", "actor": "阿福", "emotion": "scared", "vfx": "bounce", "text": "阿福条件反射似的站直了身子，缩着脖子不敢吭声。" }
+                ],
+                "female": [
+                    { "type": "action", "actor": "阿雁", "emotion": "scared", "vfx": "bounce", "text": "阿雁条件反射似的站直了身子，垂着手不敢吭声。" }
+                ]
+            },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲把小菜搁在案上，顺手拿帕子擦了擦你嘴角的糕渣——" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "嘴上沾了什么？擦擦。" },
+            { "type": "thought", "text": "桂花糕的渣……她不会闻出来吧？" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲没多看，把帕子收了，弯腰替你理了理衣领——" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "再磨蹭你父亲怕要等急了。今日考的是哪一段？" },
+            {
+                "type": "branch",
+                "condition": "protagonist_gender",
+                "male": [
+                    { "type": "action", "actor": "阿福", "emotion": "shy", "text": "母亲转身去拿墙上的书袋，阿福抢先一步取下来抱在怀里。" },
                     { "type": "dialog", "speaker": "阿福", "emotion": "shy", "text": "少爷，我给您拿着。" },
                     { "type": "action", "actor": "阿福", "emotion": "shy", "text": "他低着头走在前面，等你跟上去后，才又活泛起来。" }
                 ],
                 "female": [
-                    { "type": "action", "actor": "阿雁", "emotion": "shy", "vfx": "bounce", "text": "阿雁一见母亲进来，立马站直了身子，垂着手不敢吭声。母亲伸手去拿墙上的书袋，阿雁抢前一步取下来抱在怀里。" },
+                    { "type": "action", "actor": "阿雁", "emotion": "shy", "text": "母亲转身去拿墙上的书袋，阿雁抢前一步取下来抱在怀里。" },
                     { "type": "dialog", "speaker": "阿雁", "emotion": "shy", "text": "小姐，我给您拿着。" },
                     { "type": "action", "actor": "阿雁", "emotion": "shy", "text": "她低着头走在前面，脚步轻快，等你跟上了，才悄悄回头看了你一眼。" }
                 ]
@@ -111,8 +135,14 @@
             { "type": "dialog", "speaker": "沈伯远", "emotion": "stern", "text": "坐。" },
             { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你在他对面坐下。" },
             { "type": "narration", "text": "墙外的街道此刻已热闹起来，檐上不知什么鸟在叫，一声接一声的。" },
-            { "type": "dialog", "speaker": "沈伯远", "emotion": "neutral", "text": "昨日的功课，背来。" },
+            { "type": "dialog", "speaker": "沈伯远", "emotion": "neutral", "text": "昨日的功课，温习得怎么样了。" },
             { "type": "thought", "text": "完了。最后那段还没背熟……" },
+            { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你不敢看他的眼睛，低头应了一声——" },
+            { "type": "dialog", "speaker": "主角", "emotion": "neutral", "text": "温习过了。" },
+            { "type": "action", "actor": "沈伯远", "emotion": "neutral", "text": "父亲没接话，端起茶盏喝了一口，搁下。" },
+            { "type": "dialog", "speaker": "沈伯远", "emotion": "neutral", "text": "背给我听听。" },
+            { "type": "thought", "text": "前半段还行……后面那几句，昨天偷懒跳过去了。" },
+            { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你吸了口气，开口——" },
             { "type": "dialog", "speaker": "主角", "emotion": "neutral", "text": "民为贵，社稷次之，君为轻……" },
             { "type": "narration", "text": "磕磕绊绊背了半段，中间卡了两次。父亲没说话，端起茶盏搁到一旁，给你留出接下去的空。" },
             { "type": "dialog", "speaker": "沈伯远", "emotion": "stern", "text": "继续。" },
@@ -189,7 +219,7 @@
                     { "type": "action", "actor": "阿雁", "emotion": "shy", "text": "阿雁已经把书袋背上了，站在廊下，朝你这边探了探身子。" }
                 ]
             },
-            { "type": "dialog", "speaker": "沈伯远", "emotion": "stern", "text": "去吧。先学好本事，往后才能撑起这个家。" },
+            { "type": "dialog", "speaker": "沈伯远", "emotion": "stern", "text": "去吧。好好念。" },
             { "type": "thought", "text": "他说得很慢。" },
             { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你起身往外走。父亲在身后端着茶盏，没抬头，但你的背影刚一迈出门槛，他的目光就跟上来了。" },
             {
@@ -238,14 +268,16 @@
             { "type": "narration", "text": "旁边的沈致远冲你挤了挤眼，拿胳膊肘碰了碰你，又赶紧缩回去装模作样地翻书。周围几个孩子也都抬头看了你一眼，又低下头去。" },
             { "type": "narration", "text": "周先生一句一句地领读，戒尺拍一下案角便换一段。你跟着念，嘴上念着，心却跑到了窗外。日影一寸一寸地挪，不知什么时候，已经从脚底爬到了桌沿。" },
             { "type": "effect", "action": "show", "target": "柳蕙心", "pos": "right", "expr": "gentle" },
-            { "type": "narration", "text": "门口一阵轻轻的脚步声。" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲的身影出现在门口，没进屋，只是站在门槛外面。" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "vfx": "nudge", "text": "她朝你招了招手，等你走到跟前，伸手替你把衣襟理平，指尖顺带拈掉了肩上粘着的一片落叶。" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "vfx": "nudge", "text": "她没说话，把你胸前的书袋带子正了正。" },
-            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "你父亲说你念书有悟性。" },
-            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "她顿了一下——" },
+            { "type": "narration", "text": "门口一阵轻轻的脚步声。母亲的身影出现在门槛外面，没进屋，只是站在廊下朝你招了招手。" },
+            { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你起身出去。周先生没拦，只是瞥了你一眼，接着领读。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲等你走到跟前，伸手替你把衣襟理平，指尖顺带拈掉了肩上粘着的一片落叶。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "vfx": "nudge", "text": "她没说话，把你胸前的书袋带子正了正，又拍了拍你的肩——" },
+            { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "你父亲方才跟我说，你今日背书比上回利索。" },
+            { "type": "thought", "text": "……父亲夸我了？" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "text": "母亲看着你的眼睛，嘴角带了一点笑——" },
             { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "好好念。" },
-            { "type": "action", "actor": "多人", "emotion": "neutral", "vfx": "nudge", "text": "你要转身回去，她忽然拉了一下你的袖子，声音压得更低——" },
+            { "type": "action", "actor": "主角", "emotion": "neutral", "text": "你点了点头，转身要回去。" },
+            { "type": "action", "actor": "柳蕙心", "emotion": "gentle", "vfx": "nudge", "text": "母亲忽然拉了一下你的袖子，凑近了些，声音压得只有你听得见——" },
             { "type": "dialog", "speaker": "柳蕙心", "emotion": "gentle", "text": "枕头底下那油纸包，下次藏好些。" },
             { "type": "thought", "text": "……她早看见了。" },
             { "type": "effect", "action": "hide", "target": "柳蕙心" },
@@ -347,8 +379,6 @@
                 ]
             },
             { "type": "narration", "text": "檐下叽叽喳喳地热闹着。日头又暖了几分，桂花香从院墙那边飘过来。" },
-            { "type": "wait", "seconds": 1 },
-            { "type": "tutorial", "system": "回合推进", "text": "本月剧情已结束。点击「下一回合」结算本月产出，进入下一个月。" },
             { "type": "pause", "reason": "advance_turn", "detail": "结算本月并进入下一回合", "objective": "obj_m01_02" }
         ]
     }
