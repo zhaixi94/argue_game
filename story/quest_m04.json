@@ -1,0 +1,37 @@
+{
+  "id": "quest_m04",
+  "chapter": "第1期·新手教学",
+  "month": 4,
+  "title": "暗信·家族关系",
+  "description": "夜里书房传来父母的低语，陆鼎臣独自登门关门争论，二叔来借钱——沈家院墙里头的暗流，开始涌动了。",
+  "objectives": [
+    {
+      "id": "obj_m04_01",
+      "description": "查看与陆家的关系值",
+      "type": "view_family_relation",
+      "target": "陆家"
+    },
+    {
+      "id": "obj_m04_02",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    },
+    {
+      "id": "obj_m04_03",
+      "description": "处理一个当月家族事件",
+      "type": "resolve_event"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "学识",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "声望·小幅",
+      "quantity": 1
+    }
+  ]
+}
