@@ -1,0 +1,32 @@
+{
+  "id": "quest_m06",
+  "chapter": "第1期·新手教学",
+  "month": 6,
+  "title": "生辰·桂花",
+  "description": "十四岁生辰。母亲蒸了桂花糕，长姐绣了你的画像，二叔带了糖人来。父亲斟了一杯酒搁在桌上——等你金榜题名那天再开封。科举之路，从这里开始。",
+  "objectives": [
+    {
+      "id": "obj_m06_01",
+      "description": "查看科举系统界面",
+      "type": "view_system",
+      "system": "keju"
+    },
+    {
+      "id": "obj_m06_02",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "口才",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "银票·二十贯",
+      "quantity": 1
+    }
+  ]
+}
