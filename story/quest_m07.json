@@ -1,0 +1,38 @@
+{
+  "id": "quest_m07",
+  "chapter": "第1期·新手教学",
+  "month": 7,
+  "title": "中元·河灯",
+  "description": "七月十五中元节。父亲让你学着看家里的铺面——空了太久，该有人守着了。庙会上热闹非凡，一群人逛集市看杂耍。傍晚河边放灯，苏若兰/苏怀瑾明日便走，留下一块糕，甜得让人想闭上眼。回去的路上，巷口遇见二叔和一个陌生人说话——「没有回头路」。",
+  "objectives": [
+    {
+      "id": "obj_m07_01",
+      "description": "选择角色入驻沈家铺面",
+      "type": "place_character",
+      "building": "shenjia_shop"
+    },
+    {
+      "id": "obj_m07_02",
+      "description": "查看行动卡配置界面",
+      "type": "view_system",
+      "system": "action_card"
+    },
+    {
+      "id": "obj_m07_03",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "商业",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "银票·十贯",
+      "quantity": 1
+    }
+  ]
+}
