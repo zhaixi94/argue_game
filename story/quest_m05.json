@@ -1,0 +1,40 @@
+{
+  "id": "quest_m05",
+  "chapter": "第1期·新手教学",
+  "month": 5,
+  "title": "长姐·客来",
+  "description": "长姐替你抄书被罚，却一句怨言没有。苏家来客，白月光初见。长姐带你拜访邻家，教你读懂家族间的交易——给一些、取一些，余额便是关系。",
+  "objectives": [
+    {
+      "id": "obj_m05_01",
+      "description": "完成一次关系类交易（结交）",
+      "type": "complete_trade",
+      "trade_type": "relation",
+      "target": "邻家"
+    },
+    {
+      "id": "obj_m05_02",
+      "description": "完成联姻交易（沈婉清婚嫁陆家）",
+      "type": "complete_trade",
+      "trade_type": "marriage",
+      "target": "陆家"
+    },
+    {
+      "id": "obj_m05_03",
+      "description": "结束本月，进入下一回合",
+      "type": "advance_turn"
+    }
+  ],
+  "rewards": [
+    {
+      "target": "主角",
+      "attribute": "口才",
+      "value": 3
+    },
+    {
+      "target": "家族",
+      "item": "算经",
+      "quantity": 2
+    }
+  ]
+}
