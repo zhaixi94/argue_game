@@ -51,6 +51,7 @@
 | personalityTag | enum(Steady/Aloof/Adventurous/Shrewd/Flexible/Conservative/Fierce)? | NPC专属性格标签，影响截留率、联姻策略等 |
 | partyLoyalty | int? | NPC家族的党派忠诚度（0-100），入黨初始70，每月-1 |
 | partyContribution | int | 党派贡献累计值，用于换取情报/资源/分红 |
+| creditScore | int | 信用分（0-100，初始100，每回合+1，毁约大幅降低），影响作为交易提供方的TS估值 |
 | hasEnteredCentral | bool | 家族是否有成员担任过正三品以上官职，为true时解锁圣眷和戒心 |
 | activeBuffs | list[ActiveBuff] | 当前作用于该家族的buff列表 |
 | isDefunct | bool | 是否已灭门（如沈家） |
@@ -80,6 +81,30 @@
 > 成员关系权重与主文档一致（族长3、正三品以上3、从四品~从三品2、从九品~正四品1.5、其余成年族人1，仅15岁以上）
 >
 > NPC间初始关系全部为0，不同党派的关系下降由基础家族关系衰减公式中的党派衰减项自然处理
+
+---
+
+## 四-b、资源契约 (ResourceContract)
+
+资源类契约交易的记录。每份契约一条记录。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | string | 契约唯一ID |
+| providerFamilyId | string | 提供方家族ID |
+| receiverFamilyId | string | 接收方家族ID |
+| resourceType | enum(Money/Reputation/ImperialFavor/ResourcePoint) | 资源类型：金钱/声望/圣眷/资源点 |
+| amountPerTurn | int | 每回合输送数量（金钱以贯为单位） |
+| startTurn | int | 契约开始回合 |
+| endTurn | int | 契约结束回合（startTurn + 12） |
+| isActive | bool | 契约是否生效中 |
+| totalTS | float | 契约总TS值（签订时计算） |
+
+> 同两个家族之间最多同时10份有效契约（isActive=true）
+>
+> 每回合结算时检查提供方资源是否足够支付，不足则触发被动毁约
+>
+> 契约到期时系统自动提醒双方是否续约
 
 ---
 
