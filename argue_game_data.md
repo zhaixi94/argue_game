@@ -48,9 +48,11 @@
 | imperialFavor | int | 圣眷，步入中枢后解锁，每月自然衰减 |
 | vigilance | int | 戒心（0-100），步入中枢后解锁，30/60/80为debuff阈值 |
 | strategicTendency | enum(Political/Economic/Military/Neutral)? | NPC专属战略倾向，决定AI决策偏好 |
-| personalityTag | enum(Steady/Aloof/Adventurous/Shrewd/Flexible/Conservative/Fierce)? | NPC专属性格标签，影响截留率、联姻策略等 |
+| personalityTag | enum(Steady/Aloof/Adventurous/Shrewd/Flexible/Conservative/Fierce)? | NPC专属性格标签，影响贪取率、联姻策略等 |
 | partyLoyalty | int? | NPC家族的党派忠诚度（0-100），入黨初始70，每月-1 |
-| partyContribution | int | 党派贡献累计值，用于换取情报/资源/分红 |
+| partyLean | Map<Party, int>? | 中立家族的入党倾向（畿党/淮党各0-100，初始0），仅partyAffiliation=None时存在 |
+| partyContribution | int | 当期党派贡献，每年初清零，用于换取情报/物品，清零时未消耗部分转为忠诚度损失 |
+| partyContributionTotal | int | 历史贡献累计值，不受年度清零影响，用于分红权重 |
 | creditScore | int | 信用分（0-100，初始100，每回合+1，毁约大幅降低），影响作为交易提供方的TS估值 |
 | hasEnteredCentral | bool | 家族是否有成员担任过正三品以上官职，为true时解锁圣眷和戒心 |
 | activeBuffs | list[ActiveBuff] | 当前作用于该家族的buff列表 |
@@ -72,7 +74,7 @@
 | familyAId | string | 家族A的ID（字典序较小者） |
 | familyBId | string | 家族B的ID（字典序较大者） |
 | baseRelationship | int | 基础家族关系值（≥0），由联姻建立，每月可能衰减 |
-| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（人员类/权限类/关系类/情报类/资源类），0表示无冷却 |
+| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（资源类/人员类/权限类/关系类/情报类/政务类/党派类），0表示无冷却 |
 
 > 实际家族间关系 = min(100, baseRelationship + 双方成员关系加权平均值)
 >
@@ -152,8 +154,6 @@
 | hasPassedKeju | bool | 是否通过过科举（获得做官资格） |
 | currentRankId | string? | 当前品阶ID，对应OfficialRank表 |
 | currentPositionId | string? | 当前实职ID，对应OfficialPositionInstance；null则为散官（有品阶无实职） |
-| isOnMaternityLeave | bool | 女性官员是否在产假中 |
-| maternityLeaveEndTurn | int | 产假结束回合，0表示不在产假 |
 | isInVagrantPool | bool | 是否在流浪池中（被驱逐或随机生成的散人） |
 | vagrantPoolQuality | enum? (Normal/Usable/Talented) | 随机散人质量档位：普通/可用/天资；被驱逐族人为null |
 | vagrantDrawExpireTurn | int? | 抽卡留存截止回合，超过此回合未招募则回到流浪池；不在留存状态时为null |
@@ -349,15 +349,36 @@
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | id | string | 唯一ID |
-| type | enum(Accusation/Impeachment/Alienation/TaxEvasion) | 类型：检举/弹劾/离间/截留 |
+| type | enum(Accusation/Impeachment/Alienation) | 类型：检举/弹劾/离间 |
 | level | int | 等级（1=初级/2=中级/3=高级） |
-| targetFamilyId | string | 针对对象家族ID |
-| isConfirmed | bool | 是否已鉴定（true=明确情报，false=疑似情报） |
+| targetFamilyId | string | 针对对象家族ID（生成时=生成者家族） |
+| poolType | enum(State/Special) | 所在情报池：州情报池/特殊情报池 |
+| stateId | string? | 所属州情报池的州ID（poolType=State时有效） |
+| generatedTurn | int | 生成回合，用于12个月有效期判定 |
+| sourceOperation | enum(Fixed/StateAction/ExcessProfit/Embezzlement/Sabotage) | 生成来源：固定生成/州内行动触发/超额利润/贪取/暗中破坏 |
+| isConfirmed | bool? | 抽取出池时赋值：true=明确情报，false=疑似情报；池内为null（不分明确/疑似） |
 | description | string | 描述文本（如"XXX在Y地贪赃枉法的证据"），用于UI展示 |
-| ownerFamilyId | string? | 持有该情报卡的家族ID，null表示仍在党派情报池中 |
-| isInPartyPool | bool | 是否仍在党派情报池中（未被领取） |
+| ownerFamilyId | string? | 持有该情报卡的家族ID，null表示仍在情报池/党派情报池中 |
+| isInPartyPool | bool | 是否在党派情报池中（未被领取） |
 
-> 疑似情报（isConfirmed=false）的type和level后台已生成但前台不显示，仅显示targetFamilyId。鉴定后isConfirmed变为true，前台揭示类型和等级。
+> 池内卡片（ownerFamilyId=null且未进党派池）不分明确/疑似，前台仅显示targetFamilyId。抽取出池时按通道赋值：党派谍报机构抽取→isConfirmed=true（明确情报）；官员/建筑槽角色情报收集行动抽取→isConfirmed=false（疑似情报，type/level后台已生成但前台不显示，暗阁鉴定后isConfirmed变为true）。
+>
+> 生成概率：州情报池类型检举40%/弹劾25%/离间35%、等级初级80%/中级20%；特殊情报池类型固定弹劾、等级中级60%/高级40%。规则详见家族系统设计文档 → 情报池系统。
+
+### 十四·A 情报池 (IntelPool)
+
+情报池为全局/按州存储的情报卡容器，池内卡片不区分明确/疑似。
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| poolId | string | 池ID（州池=stateId；特殊池=special） |
+| poolType | enum(State/Special) | 州情报池/特殊情报池 |
+| stateId | string? | 所属州（poolType=State时有效） |
+| cards | IntelligenceCard[] | 池内情报卡列表（州池每家族≤20张；特殊池无上限） |
+
+- 州情报池：每州1个；总和情报池为全部州情报池的统合视图（非独立存储）
+- 特殊情报池：全局1个，仅党派谍报机构可抽取
+- 池内卡片12个月（generatedTurn起算）过期自动清除
 
 ---
 
@@ -689,9 +710,9 @@
 | familyId | string | 家族ID，主键 |
 | lastTradeYear | int | 上次发起交易的游戏年 |
 | tradeAttemptsThisYear | int | 本年已发起交易次数 |
-| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（人员类/权限类/关系类/情报类/资源类） |
+| tradeCooldownByCategory | Map<TradeCategory, int> | 按交易大类的冷却结束回合（资源类/人员类/权限类/关系类/情报类/政务类/党派类） |
 
-> NPC的截留率、入党倾向等由personalityTag和当前游戏状态推导，不单独存储。
+> NPC的贪取率由personalityTag推导，不单独存储。入党倾向（partyLean）为存储字段，初始0，通过交易系统-党派类拉拢改变。
 
 ---
 
