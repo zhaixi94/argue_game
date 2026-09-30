@@ -65,7 +65,7 @@
                   { "type": "dialog", "speaker": "主角", "emotion": "neutral", "text": "你娘教你的。" },
                   { "type": "dialog", "speaker": "阿雁", "emotion": "shy", "text": "嗯。我娘说，浆洗衣服先看布，绸子用凉水搓，麻布才用热水泡。搓错了再好的衣裳也废了。" },
                   { "type": "action", "actor": "阿雁", "emotion": "shy", "text": "她说着低下头，手指在袖口上捏了捏——" },
-                  { "type": "dialog", "speaker": "阿雁", "emotion": "shy", "text": "我娘还说，会洗衣裳的人到哪儿都有饭吃。" },
+                  { "type": "dialog", "speaker": "阿雁", "emotion": "shy", "text": "我娘还说，会做粗活的人到哪儿都有饭吃。" },
                   { "type": "action", "actor": "阿雁", "emotion": "shy", "text": "她顿了一下，声音硬了——" },
                   { "type": "dialog", "speaker": "阿雁", "emotion": "shy", "text": "她说得对。我这不是好好的。" },
                   { "type": "thought", "text": "她说她娘的时候嘴硬了一下。以前一提就掉眼泪。" },
