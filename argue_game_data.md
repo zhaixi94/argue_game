@@ -393,7 +393,7 @@
 | reputation | int | 党派声望（≥100），每月自然衰减1%（最低月衰减1点，下限100），式微线500 |
 | leaderCharacterIds | list[string] | 党派领袖的角色ID列表 |
 | privateTreasuryFunds | int | 私库金额（单位：贯） |
-| privateTreasuryTaxRate | float | 私库抽成率（0-0.10），由领袖设定，影响NPC家族忠诚衰减 |
+| privateTreasuryTaxRate | float | 私库抽成率（0.10-0.20，默认0.10，上限由私库等级决定），由领袖设定，影响NPC家族忠诚衰减 |
 | partyResourcePoints | int | 党派资源点，由党派声望兑换而来，不跨月累积 |
 | intelligenceAgencyLevel | int | 谍报机构等级（0=未解锁，≥1=已解锁，解锁条件：声望≥200） |
 | publicOpinionAgencyLevel | int | 舆论机构等级（0=未解锁，≥1=已解锁，解锁条件：声望≥500） |
